@@ -2,6 +2,7 @@ import fastify from 'fastify';
 
 import { env } from '@/env';
 import { connectDataBase } from '@/config/database';
+import { Tools } from './models';
 
 const app = fastify();
 
