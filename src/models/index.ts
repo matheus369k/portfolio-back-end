@@ -31,7 +31,7 @@ const tool = new mongoose.Schema({
 });
 
 const project = new mongoose.Schema({
-	tag: {
+	slug: {
 		type: String,
 		required: true,
 	},
@@ -63,6 +63,8 @@ const project = new mongoose.Schema({
 	},
 });
 
-export const Tools = mongoose.model('tool', tool);
-export const Projects = mongoose.model('project', project);
-export const Certificates = mongoose.model('certificate', certificate);
+export const db = {
+	Tools: mongoose.model('tool', tool),
+	Projects: mongoose.model('project', project),
+	Certificates: mongoose.model('certificate', certificate),
+}
