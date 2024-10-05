@@ -2,8 +2,8 @@ import fastify from 'fastify';
 
 import { env } from '@/env';
 import { connectDataBase } from '@/config/database';
-import { getToolsRoute, registerToolsRouter } from './router';
-import { serializerCompiler, validatorCompiler, type ZodTypeProvider } from 'fastify-type-provider-zod';
+import { getCertificatesRouter, getToolsRoute, registerCertificatesRouter, registerToolsRouter } from './router';
+import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
 const app = fastify();
 
@@ -12,6 +12,8 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(getToolsRoute);
 app.register(registerToolsRouter);
+app.register(getCertificatesRouter);
+app.register(registerCertificatesRouter);
 
 app
 	.listen({

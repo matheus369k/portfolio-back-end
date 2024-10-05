@@ -17,7 +17,7 @@
       "quoteStyle": "single",
       "bracketSpacing": true,
       "arrowParentheses": "always",
-      "lineWidth": 150,
+      "lineWidth": 100,
       "semicolons": "always"
     }
   }
