@@ -2,7 +2,7 @@ import fastify from 'fastify';
 
 import { env } from '@/env';
 import { connectDataBase } from '@/config/database';
-import { getCertificatesRouter, getToolsRoute, registerCertificatesRouter, registerToolsRouter } from './router';
+import * as routes from './router';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
 const app = fastify();
@@ -10,10 +10,12 @@ const app = fastify();
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-app.register(getToolsRoute);
-app.register(registerToolsRouter);
-app.register(getCertificatesRouter);
-app.register(registerCertificatesRouter);
+app.register(routes.getToolsRoute);
+app.register(routes.registerToolsRouter);
+app.register(routes.getCertificatesRouter);
+app.register(routes.registerCertificatesRouter);
+app.register(routes.getProjectsRouter);
+app.register(routes.registerProjectsRouter);
 
 app
 	.listen({

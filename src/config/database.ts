@@ -7,5 +7,7 @@ export async function connectDataBase() {
 		.then(() => {
 			console.log('Connected to Database!');
 		})
-		.catch(() => console.log('Error: connected to database!'));
+		.catch((error) => {
+			throw new Error(`Error: connected to database! type:${(error as Error).message}`);
+		});
 }

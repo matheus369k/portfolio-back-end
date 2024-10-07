@@ -51,12 +51,7 @@ const project = new mongoose.Schema({
 			},
 		},
 	],
-	tools: [
-		{
-			id: String,
-			name: String,
-		},
-	],
+	tools: [String],
 	description: {
 		type: String,
 		required: true,
