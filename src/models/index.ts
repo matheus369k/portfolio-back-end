@@ -39,18 +39,16 @@ const project = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	images_url: [
-		{
-			png: {
-				type: String,
-				required: true,
-			},
-			gif: {
-				type: String,
-				required: true,
-			},
+	images_url: {
+		png: {
+			type: String,
+			required: true,
 		},
-	],
+		gif: {
+			type: String,
+			required: true,
+		},
+	},
 	tools: [String],
 	description: {
 		type: String,
@@ -62,4 +60,4 @@ export const db = {
 	Tools: mongoose.model('tool', tool),
 	Projects: mongoose.model('project', project),
 	Certificates: mongoose.model('certificate', certificate),
-}
+};
