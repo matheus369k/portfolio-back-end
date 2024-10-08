@@ -5,6 +5,11 @@ import z from 'zod';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { getCertificate } from '@/controllers/get-certificates';
 import { getProjects } from '@/controllers/get-projects';
+import { registerTool } from '@/controllers/register-tool';
+import { registerCertificates } from '@/controllers/register-certificate';
+import { registerProject } from '@/controllers/register-project';
+
+// GET routes
 
 export async function getToolsRoute(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().get('/tools', async () => {
@@ -69,6 +74,8 @@ export async function getProjectsRouter(app: FastifyInstance) {
 	);
 }
 
+// POST routes
+
 export async function registerToolsRouter(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
 		'/tools',
@@ -82,10 +89,12 @@ export async function registerToolsRouter(app: FastifyInstance) {
 		},
 		async (request) => {
 			const { name, svg_url } = request.body;
-			await db.Tools.create({
-				name,
-				svg_url,
-			});
+
+			const { toolId } = await registerTool(name, svg_url);
+
+			return {
+				toolId,
+			};
 		},
 	);
 }
@@ -105,12 +114,17 @@ export async function registerCertificatesRouter(app: FastifyInstance) {
 		},
 		async (request) => {
 			const { image_url, title, validation_code, verification_url } = request.body;
-			await db.Certificates.create({
-				title,
+
+			const { certificatesId } = await registerCertificates({
 				image_url,
+				title,
 				validation_code,
 				verification_url,
 			});
+
+			return {
+				certificatesId,
+			};
 		},
 	);
 }
@@ -135,13 +149,19 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 		async (request) => {
 			const { slug, description, images_url, name, tools } = request.body;
 
-			await db.Projects.create({
-				name,
+			const { projectId } = await registerProject({
 				slug,
-				tools,
-				images_url,
 				description,
+				images_url,
+				name,
+				tools,
 			});
+
+			return {
+				projectId,
+			};
 		},
 	);
 }
+
+// DELETE routes
