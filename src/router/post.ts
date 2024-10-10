@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { registerTool } from '@/controllers/register-tool';
 import { registerCertificates } from '@/controllers/register-certificate';
 import { registerProject } from '@/controllers/register-project';
+import { inviteEmail } from '@/controllers/invite-email';
 
 export async function registerToolsRouter(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
@@ -89,6 +90,30 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 			return {
 				projectId,
 			};
+		},
+	);
+}
+
+export async function inviteEmailRouter(app: FastifyInstance) {
+	app.withTypeProvider<ZodTypeProvider>().post(
+		'/invite-email',
+		{
+			schema: {
+				body: z.object({
+					email: z.string().email(),
+					from_name: z.string().min(3),
+					message: z.string().min(2),
+				}),
+			},
+		},
+		async (request) => {
+			const { email, from_name, message } = request.body;
+
+			await inviteEmail({
+				email,
+				from_name,
+				message,
+			});
 		},
 	);
 }

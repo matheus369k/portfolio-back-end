@@ -19,6 +19,7 @@ app.register(getRoutes.getProjectsRouter);
 app.register(postRoutes.registerToolsRouter);
 app.register(postRoutes.registerCertificatesRouter);
 app.register(postRoutes.registerProjectsRouter);
+app.register(postRoutes.inviteEmailRouter);
 
 app.register(deleteRoutes.deleteToolRouter);
 app.register(deleteRoutes.deleteCertificatesRouter);
