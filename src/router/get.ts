@@ -1,10 +1,9 @@
-import { getTools } from '@/controllers/get-tools';
-import type { FastifyInstance } from 'fastify';
-import z from 'zod';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { getCertificate } from '@/controllers/get-certificates';
-import { getProjects } from '@/controllers/get-projects';
-
+import { getCertificate } from '@/controllers/get-certificates.js';
+import { getProjects } from '@/controllers/get-projects.js';
+import { getTools } from '@/controllers/get-tools.js';
+import type { FastifyInstance } from 'fastify';
+import { z } from 'zod';
 
 export async function getToolsRoute(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().get('/tools', async () => {
@@ -49,18 +48,18 @@ export async function getCertificatesRouter(app: FastifyInstance) {
 
 export async function getProjectsRouter(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().get(
-		'/projects/:slug',
+		'/projects/:max',
 		{
 			schema: {
 				params: z.object({
-					slug: z.string(),
+					max: z.coerce.number(),
 				}),
 			},
 		},
-		async (request) => {
-			const { slug } = request.params;
+		async (request, reply) => {
+			const { max } = request.params;
 
-			const { project } = await getProjects(slug);
+			const { project } = await getProjects(max);
 
 			return {
 				project,

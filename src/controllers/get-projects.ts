@@ -1,12 +1,11 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
-export async function getProjects(slug: string) {
-	const project = await db.Projects.findOne({
-		slug,
-	});
+export async function getProjects(max = 0) {
+	const project = await db.Projects.find().limit(max);
 
 	if (!project) {
-		throw new Error('Project not found!');
+		throw new ClientError('Project not found!');
 	}
 
 	return {

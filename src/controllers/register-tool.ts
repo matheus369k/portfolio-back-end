@@ -1,4 +1,5 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
 export async function registerTool(name: string, svg_url: string) {
 	const tool = await db.Tools.create({
@@ -7,7 +8,7 @@ export async function registerTool(name: string, svg_url: string) {
 	});
 
 	if (!tool) {
-		throw new Error('Error to create tool!');
+		throw new ClientError('Error to create tool!');
 	}
 
 	return {

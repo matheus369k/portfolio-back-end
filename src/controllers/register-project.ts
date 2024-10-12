@@ -1,4 +1,5 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
 interface RegisterProjectProps {
 	name: string;
@@ -27,7 +28,7 @@ export async function registerProject({
 	});
 
 	if (!project) {
-		throw new Error('Error to create project');
+		throw new ClientError('Error to create project');
 	}
 
 	return {

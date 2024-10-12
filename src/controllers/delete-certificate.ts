@@ -1,4 +1,5 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
 export async function deleteCertificate({ id }: { id: string }) {
 	await db.Certificates.findByIdAndDelete({
@@ -10,6 +11,6 @@ export async function deleteCertificate({ id }: { id: string }) {
 	});
 
 	if (certificates) {
-		throw new Error('Error to delete certificate!');
+		throw new ClientError('Error to delete certificate!');
 	}
 }

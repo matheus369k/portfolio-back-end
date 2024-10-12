@@ -1,10 +1,10 @@
-import type { FastifyInstance } from 'fastify';
-import z from 'zod';
+import { registerCertificates } from '@/controllers/register-certificate.js';
+import { registerProject } from '@/controllers/register-project.js';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { registerTool } from '@/controllers/register-tool';
-import { registerCertificates } from '@/controllers/register-certificate';
-import { registerProject } from '@/controllers/register-project';
-import { inviteEmail } from '@/controllers/invite-email';
+import { registerTool } from '@/controllers/register-tool.js';
+import { inviteEmail } from '@/controllers/invite-email.js';
+import type { FastifyInstance } from 'fastify';
+import { z } from 'zod';
 
 export async function registerToolsRouter(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().post(
@@ -65,8 +65,8 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 		{
 			schema: {
 				body: z.object({
-					slug: z.string(),
 					name: z.string(),
+					slug: z.string(),
 					images_url: z.object({
 						png: z.string(),
 						gif: z.string(),

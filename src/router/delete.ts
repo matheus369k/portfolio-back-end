@@ -1,9 +1,9 @@
-import { deleteCertificate } from '@/controllers/delete-certificate';
-import { deleteProject } from '@/controllers/delete-project';
-import { deleteTool } from '@/controllers/delete-tool';
+import { deleteCertificate } from '@/controllers/delete-certificate.js';
+import { deleteProject } from '@/controllers/delete-project.js';
+import { deleteTool } from '@/controllers/delete-tool.js';
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import z from 'zod';
+import { z } from 'zod';
 
 export async function deleteToolRouter(app: FastifyInstance) {
 	app.withTypeProvider<ZodTypeProvider>().delete(

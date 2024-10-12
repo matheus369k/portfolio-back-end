@@ -1,5 +1,6 @@
-import { env } from '@/env';
+import { ClientError } from '@/errors/client-error.js';
 import emailjs from '@emailjs/nodejs';
+import { env } from '@/env.js';
 
 interface inviteEmailProps {
 	email: string;
@@ -21,9 +22,8 @@ export async function inviteEmail({ email, from_name, message }: inviteEmailProp
 			publicKey: env.EMAIL_PUBLIC_KEY,
 			privateKey: env.EMAIL_PRIVATE_KEY,
 		},
-	);
-		
+	);	
 	} catch (error) {
-		throw new Error(`Error: ${(error as Error).message}`);
+		throw new ClientError(`Error: ${(error as Error).message}`);
 	}
 }

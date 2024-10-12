@@ -1,4 +1,5 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
 export async function deleteProject({ id }: { id: string }) {
 	await db.Projects.findByIdAndDelete({
@@ -10,6 +11,6 @@ export async function deleteProject({ id }: { id: string }) {
 	});
 
 	if (project) {
-		throw new Error('Error to delete project!');
+		throw new ClientError('Error to delete project!');
 	}
 }

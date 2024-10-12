@@ -1,4 +1,5 @@
-import { db } from '@/models';
+import { ClientError } from '@/errors/client-error.js';
+import { db } from '@/models/index.js';
 
 interface RegisterCertificatesProps {
 	title: string;
@@ -21,7 +22,7 @@ export async function registerCertificates({
 	});
 
 	if (!certificates) {
-		throw new Error('Error to create certificate!');
+		throw new ClientError('Error to create certificate!');
 	}
 
 	return {
