@@ -4,10 +4,15 @@ import * as deleteRoutes from './router/delete.js';
 import { errorHandler } from './error-handler.js';
 import * as postRoutes from './router/post.js';
 import * as getRoutes from './router/get.js';
-import Fastify from 'fastify';
+import cors from '@fastify/cors';
 import { env } from '@/env.js';
+import Fastify from 'fastify';
 
 const app = Fastify();
+
+app.register(cors, {
+	origin: '*',
+});
 
 app.setErrorHandler(errorHandler);
 
