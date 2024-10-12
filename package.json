@@ -4,7 +4,8 @@
   "main": "src/server.ts",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --env-file .env src/server.ts"
+    "dev": "tsx watch --env-file .env src/server.ts",
+    "seed": "tsx --env-file .env src/lib/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@emailjs/nodejs": "^4.1.0",
     "@fastify/cors": "^10.0.1",
+    "@paralleldrive/cuid2": "^2.2.2",
     "fastify": "^5.0.0",
     "fastify-type-provider-zod": "^4.0.1",
     "mongoose": "^8.7.0",
