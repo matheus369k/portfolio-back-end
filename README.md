@@ -31,18 +31,13 @@
 
 Este repositório contém o backend do meu portfólio. Ele é desenvolvido em TypeScript e utiliza várias tecnologias modernas para fornecer uma base sólida e escalável para o portfólio.
 
-- Registro de endereço de usuário.
-- Atualização de endereço.
-- Lista compra vinculada ao usuário.
-- Filtro de variedade de cafe.
-- Registro de novos produtos.
-
 ## Dependências
 
 - Git - [baixar](https://git-scm.com)
 - Node - [baixar](https://nodejs.org/pt)
+- MongoDb - [site](https://cloud.mongodb.com/)
+- Emailjs - [site](https://dashboard.emailjs.com)
 - VSCode ( Recomendado ) - [baixar](https://code.visualstudio.com)
-- Front-end ( Recomendado ) - [repositório](https://github.com/matheus369k/coffee-delivery)
 
 ## Iniciando
 
@@ -54,43 +49,35 @@ Digite no terminal
 
 __HTTPS__
 ```
-$ git clone https://github.com/matheus369k/coffee-delivery-api.git
+$ git clone https://github.com/matheus369k/portfolio-back-end.git
 ```
 Acesse o projeto com seguinte comando 
 ```
-$ coffee-delivery-api
+$ portfolio-back-end
 ```
 Instalando as dependências
 ```
 $ npm install
 ```
-Se for usar o docker instale as seguintes Extensões no vsCode.
-- Dev Containers
-- Docker
-
-inicie o docker e insira o comando
-```
-$ docker compose up -d
-```
-logo apos use a seguinte url para o banco de dados
-```
-DATABASE_URL="postgresql://docker:docker@localhost:5432/coffeedelivery"
-```
 ### Configurando
 
 crie um arquivo __.env__ e adicione as variáveis ambiente a seguir
 
+Url do banco de dados mongodb 
 ```
-// url banco de dados
-DATABASE_URL="postgresql://usuario:senha@host:porta/nome_do_banco
-"
-
-// Port o valor padrão e 3333
+DATABASE_URL="mongodb://<usuário>:<senha>@<host>:<porta>/<nome_do_banco>"
+```
+Porta e host do servidor
+```
 PORT=3333
+HOST='0.0.0.0'
 ```
-Esse comando ira criar as tabela no banco de dados.
+Informações necessárias para o uso do emailjs
 ```
-$ npm run prisma:dev
+EMAIL_SERVER_ID="xxxxxxxx"
+EMAIL_TEMPLATE_ID="xxxxxxxx"
+EMAIL_PUBLIC_KEY="xxxxx_xx-x"
+EMAIL_PRIVATE_KEY="xxxxxxxx-"
 ```
 Para inserir os dados no banco use o comando a seguir
 ```
@@ -102,44 +89,88 @@ $ npm run dev
 ```
 ## Rotas
 __Método HTTP GET__<br/>
-Coletar todos os produtos
+Coletar todos projetos
 ```
-/coffees
+/projects
 ```
-Filtrar pelo slug
+Liminar a quantidade de projetos
 ```
-/coffees/:slug
+/projects/:max
 ```
-Coletar dados: Cidade e UF
+Coletar todas as tecnologias
 ```
-/location/:addressId
+/tools
 ```
-Coletar endereço
+Coletar todos os certificados
 ```
-/user/:addressId
+/certificates
 ```
-Coleta de informações de confirmação de compra
+Limitar a quantidade de certificados
 ```
-/shopping/:shoppingId
+/certificates/:max
 ```
 __Método HTTP POST__<br/>
-Registrar novos produtos
+Registar novo projeto
 ```
-/coffees
+/projects
 ```
-Registrar Endereço
 ```
-/user/register
+{
+	"slug": string,
+	"tools": [string],
+	"images_url": {
+	  "png": string,
+	  "gif": string
+	  },
+	"description": string
+}
 ```
-Registar compra
+Registar nova tecnologia
 ```
-/shopping/:addressId
+/tools
+```
+```
+{
+  name: string,
+  svg_url: string,
+}
+```
+Registrar novo certificado
+```
+/certificates
+```
+```
+{
+  "title": string,
+  "validation_code": string,
+  "image_url": string,
+  "verification_url": string
+}
+```
+Enviar email
+```
+/invite-email
+```
+```
+{
+  "email": string, 
+  "from_name": string,
+  "message": string
+}
 ```
 
-__Método HTTP PUT__<br/>
-Atualizar Endereço
+__Método HTTP DELETE__<br/>
+Deletar projeto
 ```
-/user/:addressId
+/projects/:id
+```
+Deletar tecnologias
+```
+/tools/:id
+```
+Deletar certificado
+```
+/certificates/:id
 ```
 
 ## 📜Licença
