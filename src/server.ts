@@ -8,7 +8,9 @@ import cors from '@fastify/cors';
 import { env } from '@/env.js';
 import fastify from 'fastify';
 
-const app = fastify();
+const app = fastify({
+	logger: true,
+});
 
 app.register(cors, {
 	origin: '*',
@@ -32,7 +34,7 @@ app.register(deleteRoutes.deleteToolRouter);
 app.register(deleteRoutes.deleteProjectsRouter);
 app.register(deleteRoutes.deleteCertificatesRouter);
 
-app.listen({ port: env.PORT }).then(() => {
+app.listen({ port: env.PORT, host: env.HOST }).then(() => {
 	connectDataBase()
 		.then(() => {
 			console.log('HTTP server running!');

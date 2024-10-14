@@ -5,6 +5,7 @@ dotenv.config();
 
 const schemaEnv = z.object({
 	PORT: z.coerce.number().default(3333),
+	HOST: z.coerce.string().default('0.0.0.0'),
 	DATABASE_URL: z.string().url(),
 	EMAIL_SERVER_ID: z.string(),
 	EMAIL_TEMPLATE_ID: z.string(),
