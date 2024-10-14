@@ -70,7 +70,7 @@ DATABASE_URL="mongodb://<usuário>:<senha>@<host>:<porta>/<nome_do_banco>"
 Porta e host do servidor
 ```
 PORT=3333
-HOST='0.0.0.0'
+HOST="0.0.0.0"
 ```
 Informações necessárias para o uso do emailjs
 ```
@@ -116,13 +116,14 @@ Registar novo projeto
 ```
 ```
 {
-  "slug": string,
-  "tools": [string],
-  "images_url": {
-    "png": string,
-    "gif": string
+  name: string,
+  slug: string,
+  tools: [string],
+  images_url: {
+    png: string,
+    gif: string
     },
-  "description": string
+  description: string
 }
 ```
 Registar nova tecnologia
@@ -141,10 +142,10 @@ Registrar novo certificado
 ```
 ```
 {
-  "title": string,
-  "validation_code": string,
-  "image_url": string,
-  "verification_url": string
+  title: string,
+  validation_code: string,
+  image_url: string,
+  verification_url: string
 }
 ```
 Enviar email
@@ -153,9 +154,9 @@ Enviar email
 ```
 ```
 {
-  "email": string, 
-  "from_name": string,
-  "message": string
+  email: string, 
+  from_name: string,
+  message: string
 }
 ```
 
