@@ -6,9 +6,9 @@ import * as postRoutes from './router/post.js';
 import * as getRoutes from './router/get.js';
 import cors from '@fastify/cors';
 import { env } from '@/env.js';
-import Fastify from 'fastify';
+import fastify from 'fastify';
 
-const app = Fastify();
+const app = fastify();
 
 app.register(cors, {
 	origin: '*',
