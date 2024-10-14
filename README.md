@@ -116,13 +116,13 @@ Registar novo projeto
 ```
 ```
 {
-	"slug": string,
-	"tools": [string],
-	"images_url": {
-	  "png": string,
-	  "gif": string
-	  },
-	"description": string
+  "slug": string,
+  "tools": [string],
+  "images_url": {
+    "png": string,
+    "gif": string
+    },
+  "description": string
 }
 ```
 Registar nova tecnologia
