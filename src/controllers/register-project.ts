@@ -22,6 +22,7 @@ export async function registerProject({
 	tools,
 	images_url,
 	description,
+	links
 }: RegisterProjectProps) {
 	const project = await db.Projects.create({
 		name,
@@ -29,6 +30,7 @@ export async function registerProject({
 		tools,
 		images_url,
 		description,
+		links,
 	});
 
 	if (!project) {

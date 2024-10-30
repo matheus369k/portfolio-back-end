@@ -123,7 +123,11 @@ Registar novo projeto
     png: string,
     gif: string
     },
-  description: string
+  description: string,
+  links: {
+    deploy: string,
+    repository: string
+  }
 }
 ```
 Registar nova tecnologia
