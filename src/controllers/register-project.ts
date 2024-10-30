@@ -9,6 +9,10 @@ interface RegisterProjectProps {
 		png: string;
 		gif: string;
 	};
+	links: {
+		deploy: string;
+		repository: string;
+	};
 	description: string;
 }
 

@@ -1,4 +1,4 @@
-import mongoose, { Query } from 'mongoose';
+import mongoose from 'mongoose';
 
 const certificate = new mongoose.Schema({
 	title: {
@@ -45,6 +45,16 @@ const project = new mongoose.Schema({
 			required: true,
 		},
 		gif: {
+			type: String,
+			required: true,
+		},
+	},
+	links: {
+		deploy: {
+			type: String,
+			required: true,
+		},
+		repository: {
 			type: String,
 			required: true,
 		},

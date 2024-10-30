@@ -73,11 +73,15 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 					}),
 					tools: z.array(z.string()),
 					description: z.string(),
+					links: z.object({
+						deploy: z.string().url(),
+						repository: z.string().url(),
+					})
 				}),
 			},
 		},
 		async (request) => {
-			const { slug, description, images_url, name, tools } = request.body;
+			const { slug, description, images_url, name, tools, links } = request.body;
 
 			const { projectId } = await registerProject({
 				slug,
@@ -85,6 +89,7 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 				images_url,
 				name,
 				tools,
+				links,
 			});
 
 			return {

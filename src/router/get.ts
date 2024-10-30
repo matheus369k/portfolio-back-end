@@ -61,18 +61,18 @@ export async function getProjectsRouter(app: FastifyInstance) {
 			async (request) => {
 				const { max } = request.params;
 
-				const { project } = await getProjects(max);
+				const { projects } = await getProjects(max);
 
 				return {
-					project,
+					projects,
 				};
 			},
 		)
 		.get('/projects', async (request) => {
-			const { project } = await getProjects();
+			const { projects } = await getProjects();
 
 			return {
-				project,
+				projects,
 			};
 		});
 }
