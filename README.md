@@ -41,7 +41,7 @@ npm install
 adicione o arquivo .env e insira as variáveis de ambiente baixo...
 
 ```bash
-DATABASE_URL="mongodb://<usuário>:<senha>@<host>:<porta>/?authSource=admin"
+DATABASE_URL="mongodb://localhost/?authSource=admin"
 DATABASE_USERNAME="USERNAME"
 DATABASE_PASSWORD="PASSWORD"  
 
