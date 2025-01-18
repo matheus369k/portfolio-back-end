@@ -1,6 +1,6 @@
 import { connectDataBase } from '@/config/database.js';
 import { db } from '@/models/index.js';
-import {createId} from '@paralleldrive/cuid2';
+import { createId } from '@paralleldrive/cuid2';
 import mongoose from 'mongoose';
 
 async function seed() {
@@ -18,6 +18,10 @@ async function seed() {
 				png: 'http://localhost:3000/png',
 				gif: 'http://localhost:3000/gif',
 			},
+			links: {
+				deploy: 'http://localhost:3000/deploy',
+				repository: 'http://localhost:3000/repositorey',
+			},
 			tools: ['HTML', 'CSS', 'Javascript'],
 			description: 'Aplicação para registar e adicionar estados a tarefas ja completas.',
 		},
@@ -27,6 +31,10 @@ async function seed() {
 			images_url: {
 				png: 'http://localhost:3000/png',
 				gif: 'http://localhost:3000/gif',
+			},
+			links: {
+				deploy: 'http://localhost:3000/deploy',
+				repository: 'http://localhost:3000/repositorey',
 			},
 			tools: ['React', 'Typescript', 'TailwindCSS'],
 			description: 'Aplicação e um grande guia sobre os monstros do anime Pokemon.',
