@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const certificate = new mongoose.Schema({
+	order: {
+		type: Number,
+		required: true,
+	},
 	title: {
 		type: String,
 		required: true,
@@ -31,6 +35,10 @@ const tool = new mongoose.Schema({
 });
 
 const project = new mongoose.Schema({
+	order: {
+		type: Number,
+		required: true,
+	},
 	slug: {
 		type: String,
 		required: true,
