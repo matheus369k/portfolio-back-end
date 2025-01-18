@@ -2,7 +2,9 @@ import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
 
 export async function getCertificate(max = 0) {
-	const certificates = await db.Certificates.find().limit(max);
+	const certificates = await db.Certificates.find().limit(max).sort({
+		order: 'asc',
+	});
 
 	if (!certificates) {
 		throw new ClientError('Certificates not found!');
