@@ -4,8 +4,6 @@
 
   [Descrição](#descrição)
   |
-  [Demo](#demo-gif)
-  |
   [Iniciando](#iniciando)
   |
   [Dependências](#dependências)
@@ -13,77 +11,60 @@
   [Rotas](#rotas)
   |
   [Licença](#licença)
-
 </div>
 
 <div align='center'>
   <img src='https://img.shields.io/github/license/matheus369k/coffee-delivery-api.svg'/>
-  <img src='https://img.shields.io/github/watchers/matheus369k/coffee-delivery-api.svg' />
-</div>
-
-## Demo Gif
-
-<div align='center'>
-  <img src='.github/coffee-delivery-projetc-view.gif' />
 </div>
 
 ## Descrição
 
-Este repositório contém o backend do meu portfólio. Ele é desenvolvido em TypeScript e utiliza várias tecnologias modernas para fornecer uma base sólida e escalável para o portfólio.
-
-## Dependências
-
-- Git - [baixar](https://git-scm.com)
-- Node - [baixar](https://nodejs.org/pt)
-- MongoDb - [site](https://cloud.mongodb.com/)
-- Emailjs - [site](https://dashboard.emailjs.com)
-- VSCode ( Recomendado ) - [baixar](https://code.visualstudio.com)
+O projeto é uma API para o portfólio pessoal. Tendo como objetivo, armazenar as informações do portfólio, como projetos, tecnologias e certificados e fazer envio de email utilizando o EmailJS.
 
 ## Iniciando
 
-Para testar o projeto na sua maquina, recomenda-se clonar o repositório em uma pasta local, como seguinte comando.
+E necessário ter instalado:
+- docker
+- git
+- nodejs
 
-### Instalando o projeto
+E uma conta no EmailJS.
 
-Digite no terminal
+Para iniciar o projeto, primeiro clone o repositório e instale as dependências...
 
-__HTTPS__
+```bash
+git clone https://github.com/matheus369k/portfolio-back-end.git
+cd portfolio-back-end
+npm install
 ```
-$ git clone https://github.com/matheus369k/portfolio-back-end.git
-```
-Acesse o projeto com seguinte comando 
-```
-$ portfolio-back-end
-```
-Instalando as dependências
-```
-$ npm install
-```
-### Configurando
 
-crie um arquivo __.env__ e adicione as variáveis ambiente a seguir
+adicione o arquivo .env e insira as variáveis de ambiente baixo...
 
-Url do banco de dados mongodb 
-```
-DATABASE_URL="mongodb://<usuário>:<senha>@<host>:<porta>/<nome_do_banco>"
-```
-Porta e host do servidor
-```
-PORT=3333
-HOST="0.0.0.0"
-```
-Informações necessárias para o uso do emailjs
-```
+```bash
+DATABASE_URL="mongodb://<usuário>:<senha>@<host>:<porta>/?authSource=admin"
+DATABASE_USERNAME="USERNAME"
+DATABASE_PASSWORD="PASSWORD"  
+
 EMAIL_SERVER_ID="xxxxxxxx"
 EMAIL_TEMPLATE_ID="xxxxxxxx"
 EMAIL_PUBLIC_KEY="xxxxx_xx-x"
 EMAIL_PRIVATE_KEY="xxxxxxxx-"
+
+HOST="0.0.0.0"
+PORT=3333
 ```
-Para inserir os dados no banco use o comando a seguir
+
+Agora crie o banco de dados do docker, digite o comando abaixo no terminal do projeto...
+
+```bash
+docker compose -up -d
 ```
-$ npm run seed
+
+Após use o comando abaixo para inserir dados faker no banco de dados...
+```bash
+npm run seed
 ```
-Aplicação pronta, use o comando abaixo para rodar a aplicação
+Por fim, inicie o projeto...
 ```
 $ npm run dev
 ```
