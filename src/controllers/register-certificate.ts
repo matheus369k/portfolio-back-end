@@ -6,6 +6,7 @@ interface RegisterCertificatesProps {
 	image_url: string;
 	validation_code: string;
 	verification_url: string;
+	order: number;
 }
 
 export async function registerCertificates({
@@ -13,12 +14,14 @@ export async function registerCertificates({
 	image_url,
 	validation_code,
 	verification_url,
+	order,
 }: RegisterCertificatesProps) {
 	const certificates = await db.Certificates.create({
 		title,
 		image_url,
 		validation_code,
 		verification_url,
+		order,
 	});
 
 	if (!certificates) {

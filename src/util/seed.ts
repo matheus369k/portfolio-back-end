@@ -12,6 +12,7 @@ async function seed() {
 
 	await db.Projects.insertMany([
 		{
+			order: 2,
 			name: 'Todo',
 			slug: 'todo',
 			images_url: {
@@ -26,6 +27,7 @@ async function seed() {
 			description: 'Aplicação para registar e adicionar estados a tarefas ja completas.',
 		},
 		{
+			order: 1,
 			name: 'Pokedex',
 			slug: 'pokedex',
 			images_url: {
@@ -42,18 +44,21 @@ async function seed() {
 	]);
 	await db.Certificates.insertMany([
 		{
+			order: 3,
 			title: 'Desenvolvedor CSS e HTML',
 			validation_code: `${createId()}`,
 			image_url: 'http://localhost:3000/desenvolvedor-css-e-html',
 			verification_url: 'http://localhost:3000/verification',
 		},
 		{
+			order: 2,
 			title: 'Desenvolvedor Javascript',
 			validation_code: `${createId()}`,
 			image_url: 'http://localhost:3000/desenvolvedor-javascript',
 			verification_url: 'http://localhost:3000/verification',
 		},
 		{
+			order: 1,
 			title: 'Desenvolvedor Fullstack',
 			validation_code: `${createId()}`,
 			image_url: 'http://localhost:3000/desenvolvedor-fullstack',

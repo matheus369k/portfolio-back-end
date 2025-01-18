@@ -5,6 +5,7 @@ interface RegisterProjectProps {
 	name: string;
 	slug: string;
 	tools: string[];
+	order: number;
 	images_url: {
 		png: string;
 		gif: string;
@@ -22,7 +23,8 @@ export async function registerProject({
 	tools,
 	images_url,
 	description,
-	links
+	order,
+	links,
 }: RegisterProjectProps) {
 	const project = await db.Projects.create({
 		name,
@@ -31,6 +33,7 @@ export async function registerProject({
 		images_url,
 		description,
 		links,
+		order,
 	});
 
 	if (!project) {
