@@ -57,7 +57,7 @@ PORT=3333
 Agora crie o banco de dados do docker, digite o comando abaixo no terminal do projeto...
 
 ```bash
-docker compose -up -d
+docker compose up -d
 ```
 
 Após use o comando abaixo para inserir dados faker no banco de dados...
