@@ -9,17 +9,21 @@ const certificate = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	validation_code: {
+	description: {
 		type: String,
 		required: true,
 	},
-	image_url: {
+	emission_data: {
+		type: Date,
+		required: true,
+	},
+	link: {
 		type: String,
 		required: true,
 	},
-	verification_url: {
-		type: String,
-		required: true,
+	create_at: {
+		type: Date,
+		default: Date.now,
 	},
 });
 

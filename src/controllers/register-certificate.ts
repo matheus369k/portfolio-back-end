@@ -2,26 +2,26 @@ import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
 
 interface RegisterCertificatesProps {
-	title: string;
-	image_url: string;
-	validation_code: string;
-	verification_url: string;
 	order: number;
+	title: string;
+	description: string;
+	emission_data: string;
+	link: string;
 }
 
 export async function registerCertificates({
 	title,
-	image_url,
-	validation_code,
-	verification_url,
+	description,
+	emission_data,
+	link,
 	order,
 }: RegisterCertificatesProps) {
 	const certificates = await db.Certificates.create({
+		emission_data,
+		description,
 		title,
-		image_url,
-		validation_code,
-		verification_url,
 		order,
+		link,
 	});
 
 	if (!certificates) {

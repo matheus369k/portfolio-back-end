@@ -38,25 +38,25 @@ async function seed() {
 	]);
 	await db.Certificates.insertMany([
 		{
+			description: 'Desenvolvedor HTML e CSS',
+			emission_data: '2023-06-12',
+			link: 'http://localhost:3000/link',
 			order: 3,
 			title: 'Desenvolvedor CSS e HTML',
-			validation_code: `${createId()}`,
-			image_url: 'http://localhost:3000/desenvolvedor-css-e-html',
-			verification_url: 'http://localhost:3000/verification',
 		},
 		{
+			description: 'Desenvolvedor JavaScript',
+			emission_data: '2023-03-12',
+			link: 'http://localhost:3000/link',
 			order: 2,
-			title: 'Desenvolvedor Javascript',
-			validation_code: `${createId()}`,
-			image_url: 'http://localhost:3000/desenvolvedor-javascript',
-			verification_url: 'http://localhost:3000/verification',
+			title: 'Desenvolvedor JavaScript',
 		},
 		{
-			order: 1,
-			title: 'Desenvolvedor Fullstack',
-			validation_code: `${createId()}`,
-			image_url: 'http://localhost:3000/desenvolvedor-fullstack',
-			verification_url: 'http://localhost:3000/verification',
+			description: 'Desenvolvedor Typescript',
+			emission_data: '2023-01-12',
+			link: 'http://localhost:3000/link',
+			order: 2,
+			title: 'Desenvolvedor Typescript',
 		},
 	]);
 	await db.Tools.insertMany([
