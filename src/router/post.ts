@@ -36,20 +36,22 @@ export async function registerCertificatesRouter(app: FastifyInstance) {
 			schema: {
 				body: z.object({
 					title: z.string().min(5),
-					validation_code: z.string().min(14),
-					image_url: z.string().url(),
-					verification_url: z.string().url(),
+					description: z.string().min(14),
+					emission_data: z.string().date(),
+					link: z.string().url(),
+					order: z.number(),
 				}),
 			},
 		},
 		async (request) => {
-			const { image_url, title, validation_code, verification_url } = request.body;
+			const { title, description, emission_data, link, order } = request.body;
 
 			const { certificatesId } = await registerCertificates({
-				image_url,
 				title,
-				validation_code,
-				verification_url,
+				description,
+				emission_data,
+				link,
+				order,
 			});
 
 			return {
@@ -65,28 +67,27 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 		{
 			schema: {
 				body: z.object({
+					order: z.number(),
 					name: z.string(),
 					slug: z.string(),
-					images_url: z.object({
-						png: z.string(),
-						gif: z.string(),
-					}),
+					image_url: z.string(),
 					tools: z.array(z.string()),
 					description: z.string(),
 					links: z.object({
 						deploy: z.string().url(),
 						repository: z.string().url(),
-					})
+					}),
 				}),
 			},
 		},
 		async (request) => {
-			const { slug, description, images_url, name, tools, links } = request.body;
+			const { slug, description, image_url, name, tools, links, order } = request.body;
 
 			const { projectId } = await registerProject({
+				order,
 				slug,
 				description,
-				images_url,
+				image_url,
 				name,
 				tools,
 				links,
