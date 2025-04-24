@@ -6,10 +6,7 @@ interface RegisterProjectProps {
 	slug: string;
 	tools: string[];
 	order: number;
-	images_url: {
-		png: string;
-		gif: string;
-	};
+	image_url: string;
 	links: {
 		deploy: string;
 		repository: string;
@@ -21,7 +18,7 @@ export async function registerProject({
 	name,
 	slug,
 	tools,
-	images_url,
+	image_url,
 	description,
 	order,
 	links,
@@ -30,7 +27,7 @@ export async function registerProject({
 		name,
 		slug,
 		tools,
-		images_url,
+		image_url,
 		description,
 		links,
 		order,

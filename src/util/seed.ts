@@ -15,10 +15,7 @@ async function seed() {
 			order: 2,
 			name: 'Todo',
 			slug: 'todo',
-			images_url: {
-				png: 'http://localhost:3000/png',
-				gif: 'http://localhost:3000/gif',
-			},
+			image_url: 'http://localhost:3000/png',
 			links: {
 				deploy: 'http://localhost:3000/deploy',
 				repository: 'http://localhost:3000/repositorey',
@@ -30,10 +27,7 @@ async function seed() {
 			order: 1,
 			name: 'Pokedex',
 			slug: 'pokedex',
-			images_url: {
-				png: 'http://localhost:3000/png',
-				gif: 'http://localhost:3000/gif',
-			},
+			image_url: 'http://localhost:3000/gif',
 			links: {
 				deploy: 'http://localhost:3000/deploy',
 				repository: 'http://localhost:3000/repositorey',

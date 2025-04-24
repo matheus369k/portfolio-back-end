@@ -47,15 +47,9 @@ const project = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	images_url: {
-		png: {
-			type: String,
-			required: true,
-		},
-		gif: {
-			type: String,
-			required: true,
-		},
+	image_url: {
+		type: String,
+		required: true,
 	},
 	links: {
 		deploy: {
@@ -71,6 +65,10 @@ const project = new mongoose.Schema({
 	description: {
 		type: String,
 		required: true,
+	},
+	create_at: {
+		type: Date,
+		default: Date.now,
 	},
 });
 
