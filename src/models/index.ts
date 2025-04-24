@@ -36,6 +36,10 @@ const tool = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	create_at: {
+		type: Date,
+		default: Date.now,
+	},
 });
 
 const project = new mongoose.Schema({

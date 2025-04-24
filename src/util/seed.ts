@@ -1,6 +1,5 @@
 import { connectDataBase } from '@/config/database.js';
 import { db } from '@/models/index.js';
-import { createId } from '@paralleldrive/cuid2';
 import mongoose from 'mongoose';
 
 async function seed() {
