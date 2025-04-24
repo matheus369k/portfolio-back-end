@@ -12,15 +12,16 @@ export async function registerToolsRouter(app: FastifyInstance) {
 		{
 			schema: {
 				body: z.object({
+					category: z.enum(['front_end', 'back_end', 'another']),
 					name: z.string(),
 					svg_url: z.string().url(),
 				}),
 			},
 		},
 		async (request) => {
-			const { name, svg_url } = request.body;
+			const { name, svg_url, category } = request.body;
 
-			const { toolId } = await registerTool(name, svg_url);
+			const { toolId } = await registerTool({ name, svg_url, category });
 
 			return {
 				toolId,
@@ -37,9 +38,9 @@ export async function registerCertificatesRouter(app: FastifyInstance) {
 				body: z.object({
 					title: z.string().min(5),
 					description: z.string().min(14),
-					emission_data: z.string().date(),
+					emission_data: z.coerce.date(),
 					link: z.string().url(),
-					order: z.number(),
+					order: z.coerce.number(),
 				}),
 			},
 		},

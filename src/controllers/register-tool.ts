@@ -1,8 +1,14 @@
 import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
 
-export async function registerTool(name: string, svg_url: string) {
-	const tool = await db.Tools.create({
+interface RegisterToolProps {
+	name: string;
+	svg_url: string;
+	category: 'front_end' | 'back_end' | 'another';
+}
+
+export async function registerTool({ category, name, svg_url }: RegisterToolProps) {
+	const tool = await db.Tools[category].create({
 		name,
 		svg_url,
 	});

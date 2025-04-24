@@ -81,7 +81,11 @@ const project = new mongoose.Schema({
 });
 
 export const db = {
-	Tools: mongoose.model('tool', tool),
+	Tools: {
+		front_end: mongoose.model('tools_front', tool),
+		back_end: mongoose.model('tools_back', tool),
+		another: mongoose.model('tools_another', tool),
+	},
 	Projects: mongoose.model('project', project),
 	Certificates: mongoose.model('certificate', certificate),
 };

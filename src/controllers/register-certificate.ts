@@ -5,7 +5,7 @@ interface RegisterCertificatesProps {
 	order: number;
 	title: string;
 	description: string;
-	emission_data: string;
+	emission_data: Date;
 	link: string;
 }
 
