@@ -1,0 +1,109 @@
+# Variables
+@base=http://localhost:3333
+@certificateId={{PostCertificate.response.body.certificatesId}}
+@projectId={{PostProject.response.body.projectId}}
+@toolId={{PostTool.response.body.toolId}}
+
+###
+
+# Get Check Hearth
+# @name CheckHearth
+GET {{base}}/hearth
+
+
+###
+
+# Get Certificantes
+# @name GetCertificates
+GET {{base}}/certificates
+
+###
+
+# Get Projects
+# @name GetProjects
+GET {{base}}/projects
+
+###
+
+# Get Tools
+# @name GetTools
+GET {{base}}/tools
+
+###
+
+# Post Certificantes
+# @name PostCertificate
+POST {{base}}/certificates
+Content-Type: application/json
+
+{
+  "title": "Certificate Test",
+  "description": "This certificate is for test",
+  "emission_data": "2025-02-03T21:41:14.861Z",
+  "link": "http://exemple.com/certificate",
+  "order": 6
+}
+
+###
+
+# Post Projects
+# @name PostProject
+POST {{base}}/projects
+Content-Type: application/json
+
+{
+  "order": 6,
+  "name": "This Test Project",
+  "slug": "this-test-project",
+  "image_url": "http://exemple.com/project-image.png",
+  "tools": ["test-1", "test-2", "test-3"],
+  "description": "This project is create for teste request.",
+  "links": {
+    "deploy": "http://exemple.com/project/deploy",
+    "repository": "http://exemple.com/projecr/respository"
+	}
+}
+
+###
+
+# Post Tools
+# @name PostTool
+POST {{base}}/tools
+Content-Type: application/json
+
+{
+  "category": "front_end",
+  "name": "Test-1",
+  "svg_url": "http://exemple.com/test-1.svg"
+}
+
+###
+
+# Post Invite E-mail
+# @name PostInviteEmail
+POST {{base}}/invite-email
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "from_name": "Test 1",
+  "message": "This email is invite to test too..."
+}
+
+###
+
+# Delete Certificantes
+# @name DeleteCertificate
+DELETE {{base}}/certificates/{{certificateId}}
+
+###
+
+# Delete Projects
+# @name DeleteProject
+DELETE {{base}}/projects/{{projectId}}
+
+###
+
+# Delete Tools
+# @name DeleteTool
+DELETE {{base}}/tools/{{toolId}}
