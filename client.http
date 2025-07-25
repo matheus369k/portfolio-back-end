@@ -10,7 +10,6 @@
 # @name CheckHearth
 GET {{base}}/hearth
 
-
 ###
 
 # Get Certificantes

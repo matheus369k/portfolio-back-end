@@ -1,4 +1,8 @@
-import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import {
+	serializerCompiler,
+	validatorCompiler,
+	type ZodTypeProvider,
+} from 'fastify-type-provider-zod';
 import { connectDataBase } from '@/config/database.js';
 import * as deleteRoutes from './router/delete.js';
 import { errorHandler } from './error-handler.js';
@@ -8,12 +12,10 @@ import cors from '@fastify/cors';
 import { env } from '@/env.js';
 import fastify from 'fastify';
 
-const app = fastify({
-	logger: true,
-});
+const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 app.register(cors, {
-	origin: '*',
+	origin: env.FRONTEND_URL,
 });
 
 app.setErrorHandler(errorHandler);
@@ -21,6 +23,7 @@ app.setErrorHandler(errorHandler);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
+app.register(getRoutes.CheckHealth);
 app.register(getRoutes.getToolsRoute);
 app.register(getRoutes.getProjectsRouter);
 app.register(getRoutes.getCertificatesRouter);

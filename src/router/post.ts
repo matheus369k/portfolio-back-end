@@ -1,13 +1,12 @@
 import { registerCertificates } from '@/controllers/register-certificate.js';
 import { registerProject } from '@/controllers/register-project.js';
-import type { ZodTypeProvider } from 'fastify-type-provider-zod';
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 import { registerTool } from '@/controllers/register-tool.js';
 import { inviteEmail } from '@/controllers/invite-email.js';
-import type { FastifyInstance } from 'fastify';
-import { z } from 'zod';
+import { z } from 'zod/v4';
 
-export async function registerToolsRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().post(
+export const registerToolsRouter: FastifyPluginCallbackZod = async (app) => {
+	app.post(
 		'/tools',
 		{
 			schema: {
@@ -18,20 +17,18 @@ export async function registerToolsRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { name, svg_url, category } = request.body;
-
 			const { toolId } = await registerTool({ name, svg_url, category });
-
-			return {
+			return reply.status(201).send({
 				toolId,
-			};
+			});
 		},
 	);
-}
+};
 
-export async function registerCertificatesRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().post(
+export const registerCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
+	app.post(
 		'/certificates',
 		{
 			schema: {
@@ -44,9 +41,8 @@ export async function registerCertificatesRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { title, description, emission_data, link, order } = request.body;
-
 			const { certificatesId } = await registerCertificates({
 				title,
 				description,
@@ -54,16 +50,15 @@ export async function registerCertificatesRouter(app: FastifyInstance) {
 				link,
 				order,
 			});
-
-			return {
+			return reply.status(201).send({
 				certificatesId,
-			};
+			});
 		},
 	);
-}
+};
 
-export async function registerProjectsRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().post(
+export const registerProjectsRouter: FastifyPluginCallbackZod = async (app) => {
+	app.post(
 		'/projects',
 		{
 			schema: {
@@ -81,9 +76,8 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { slug, description, image_url, name, tools, links, order } = request.body;
-
 			const { projectId } = await registerProject({
 				order,
 				slug,
@@ -93,16 +87,15 @@ export async function registerProjectsRouter(app: FastifyInstance) {
 				tools,
 				links,
 			});
-
-			return {
+			return reply.status(201).send({
 				projectId,
-			};
+			});
 		},
 	);
-}
+};
 
-export async function inviteEmailRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().post(
+export const inviteEmailRouter: FastifyPluginCallbackZod = async (app) => {
+	app.post(
 		'/invite-email',
 		{
 			schema: {
@@ -113,14 +106,14 @@ export async function inviteEmailRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { email, from_name, message } = request.body;
-
 			await inviteEmail({
 				email,
 				from_name,
 				message,
 			});
+			return reply.status(201).send('ok');
 		},
 	);
-}
+};

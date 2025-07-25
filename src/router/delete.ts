@@ -1,12 +1,11 @@
 import { deleteCertificate } from '@/controllers/delete-certificate.js';
 import { deleteProject } from '@/controllers/delete-project.js';
 import { deleteTool } from '@/controllers/delete-tool.js';
-import type { FastifyInstance } from 'fastify';
-import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import { z } from 'zod';
+import type { FastifyPluginCallbackZod, FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
+import { z } from 'zod/v4';
 
-export async function deleteToolRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().delete(
+export const deleteToolRouter: FastifyPluginCallbackZod = async (app) => {
+	app.delete(
 		'/tools/:id',
 		{
 			schema: {
@@ -15,16 +14,18 @@ export async function deleteToolRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { id } = request.params;
 
 			await deleteTool({ id });
+
+			return reply.status(204).send('deleted');
 		},
 	);
-}
+};
 
-export async function deleteCertificatesRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().delete(
+export const deleteCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
+	app.delete(
 		'/certificates/:id',
 		{
 			schema: {
@@ -33,16 +34,18 @@ export async function deleteCertificatesRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { id } = request.params;
 
 			await deleteCertificate({ id });
+
+			return reply.status(204).send('deleted');
 		},
 	);
-}
+};
 
-export async function deleteProjectsRouter(app: FastifyInstance) {
-	app.withTypeProvider<ZodTypeProvider>().delete(
+export const deleteProjectsRouter: FastifyPluginCallbackZod = async (app) => {
+	app.delete(
 		'/projects/:id',
 		{
 			schema: {
@@ -51,10 +54,12 @@ export async function deleteProjectsRouter(app: FastifyInstance) {
 				}),
 			},
 		},
-		async (request) => {
+		async (request, reply) => {
 			const { id } = request.params;
 
 			await deleteProject({ id });
+
+			return reply.status(204).send('deleted');
 		},
 	);
-}
+};
