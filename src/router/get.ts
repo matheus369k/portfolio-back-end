@@ -47,29 +47,21 @@ export const getCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
 		});
 };
 
+const getProjectsRouterSchema = {
+	schema: {
+		querystring: z.object({
+			max: z.coerce.number().optional(),
+		}),
+	},
+};
+
 export const getProjectsRouter: FastifyPluginCallbackZod = async (app) => {
-	app
-		.get(
-			'/projects/:max',
-			{
-				schema: {
-					params: z.object({
-						max: z.coerce.number(),
-					}),
-				},
-			},
-			async (request, reply) => {
-				const { max } = request.params;
-				const { projects } = await getProjects(max);
-				return reply.status(200).send({
-					projects,
-				});
-			},
-		)
-		.get('/projects', async (request, reply) => {
-			const { projects } = await getProjects();
-			return reply.status(200).send({
-				projects,
-			});
+	app.get('/projects', getProjectsRouterSchema, async (request, reply) => {
+		const max = request.query?.max;
+		const { projects } = await getProjects(max);
+
+		return reply.status(200).send({
+			projects,
 		});
+	});
 };

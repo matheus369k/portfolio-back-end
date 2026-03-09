@@ -21,6 +21,8 @@ GET {{base}}/certificates
 # Get Projects
 # @name GetProjects
 GET {{base}}/projects
+// Accept query attribute: 
+// max: number
 
 ###
 
