@@ -45,7 +45,8 @@ const tool = new mongoose.Schema({
 const project = new mongoose.Schema({
 	access_total: {
 		type: Number,
-		required: true,
+		required: false,
+		default: 0,
 	},
 	slug: {
 		type: String,

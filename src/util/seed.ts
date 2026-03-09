@@ -53,7 +53,6 @@ async function seed() {
 			type: 'full-stack',
 		},
 		{
-			access_total: 200,
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/eletrocado.jpg',
 			links: [
@@ -78,7 +77,6 @@ async function seed() {
 			type: 'full-stack',
 		},
 		{
-			access_total: 0,
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/play-movies-series.jpg',
 			links: [
