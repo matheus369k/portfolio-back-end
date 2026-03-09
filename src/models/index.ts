@@ -43,6 +43,10 @@ const tool = new mongoose.Schema({
 });
 
 const project = new mongoose.Schema({
+	access_total: {
+		type: Number,
+		required: true,
+	},
 	order: {
 		type: Number,
 		required: true,
