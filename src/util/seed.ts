@@ -51,7 +51,6 @@ async function seed() {
 			description:
 				'Coffee Delivery e uma plataforma fictícia que, tem como objetivo criar e oferecer uma experiência de compra de café prática e conveniente. Você pode escolher entre uma variedade de tipos de café e métodos de preparo, tudo de forma fácil e rápida. Compre diretamente pelo site e receba o seu café fresco diretamente em casa, sem precisar sair de casa',
 			type: 'full-stack',
-			order: 1,
 		},
 		{
 			access_total: 200,
@@ -77,7 +76,6 @@ async function seed() {
 			description:
 				'Eletrocado e uma plataforma de E-commerce fictícia especializado em produtos eletrônicos. O site oferece uma ampla variedade de produtos eletrônicos, desde smartphones e tablets até notebooks e acessórios. Os usuários podem explorar os produtos disponíveis, adicionar itens ao carrinho de compras e finalizar as compras de forma rápida e segura.',
 			type: 'full-stack',
-			order: 3,
 		},
 		{
 			access_total: 0,
@@ -114,7 +112,6 @@ async function seed() {
 			description:
 				'Play Movies and Series e uma plataforma de streaming fictícia, com o objetivo de simular um site de streaming real, onde os usuários podem ter acesso a filmes e séries online. A plataforma oferece uma ampla variedade de conteúdo, incluindo filmes e séries de diferentes gêneros. Os usuários podem navegar pela biblioteca de conteúdo disponível, pesquisar por títulos específicos.',
 			type: 'full-stack',
-			order: 2,
 		},
 		{
 			access_total: 3850,
@@ -136,7 +133,6 @@ async function seed() {
 			description:
 				'O projeto tem como objetivo criar uma landing page responsiva e atraente para a empresa fictícia Manage. A landing page foi desenvolvida utilizando HTML, CSS e JavaScript, com foco em uma interface limpa e intuitiva. O objetivo principal é promover a empresa e seus serviços de forma eficaz, atraindo visitantes e convertendo-os em clientes.',
 			type: 'landing-page',
-			order: 4,
 		},
 	]);
 	await db.Certificates.insertMany([
