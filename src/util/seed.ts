@@ -17,10 +17,20 @@ async function seed() {
 		{
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/coffee-delivery.jpg',
-			links: {
-				deploy: 'https://matheus369k.github.io/coffee-delivery/',
-				repository: 'https://github.com/matheus369k/coffee-delivery',
-			},
+			links: [
+				{
+					name: 'site',
+					link: 'https://matheus369k.github.io/coffee-delivery/',
+				},
+				{
+					name: 'repositório Front-End',
+					link: 'https://github.com/matheus369k/coffee-delivery',
+				},
+				{
+					name: 'repositório Back-End',
+					link: 'https://github.com/matheus369k/coffee-delivery-api',
+				},
+			],
 			slug: 'coffee-delivery',
 			name: 'Coffee Delivery',
 			tools: [
@@ -45,10 +55,20 @@ async function seed() {
 		{
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/eletrocado.jpg',
-			links: {
-				deploy: 'https://matheus369k.github.io/mercado-eletrocado/',
-				repository: 'https://github.com/matheus369k/mercado-eletrocado',
-			},
+			links: [
+				{
+					name: 'site',
+					link: 'https://matheus369k.github.io/mercado-eletrocado/',
+				},
+				{
+					name: 'repositório Front-End',
+					link: 'https://github.com/matheus369k/mercado-eletrocado',
+				},
+				{
+					name: 'repositório Back-End',
+					link: 'https://github.com/matheus369k/mercado-eletrocado-api',
+				},
+			],
 			slug: 'eletrocado',
 			name: 'Eletrocado',
 			tools: ['react', 'vite', 'css', 'typescript', 'react-router-dom', 'eslint', 'redux', 'axios'],
@@ -60,10 +80,20 @@ async function seed() {
 		{
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/play-movies-series.jpg',
-			links: {
-				deploy: 'https://matheus369k.github.io/play-movies-series/',
-				repository: 'https://github.com/matheus369k/play-movies-series',
-			},
+			links: [
+				{
+					name: 'site',
+					link: 'https://matheus369k.github.io/play-movies-series/',
+				},
+				{
+					name: 'repositório Front-End',
+					link: 'https://matheus369k.github.io/play-movies-series',
+				},
+				{
+					name: 'repositório Back-End',
+					link: 'https://matheus369k.github.io/play-movies-series-api',
+				},
+			],
 			slug: 'play-movies-and-series',
 			name: 'Play Movies and Series',
 			tools: [
@@ -86,10 +116,16 @@ async function seed() {
 		{
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/manage-landing-page.jpg',
-			links: {
-				deploy: 'https://matheus369k.github.io/manage-landing-page-master/',
-				repository: 'https://github.com/matheus369k/manage-landing-page-master',
-			},
+			links: [
+				{
+					name: 'site',
+					link: 'https://matheus369k.github.io/manage-landing-page-master/',
+				},
+				{
+					name: 'repositório',
+					link: 'https://matheus369k.github.io/manage-landing-page-master/',
+				},
+			],
 			slug: 'manage-landing-page',
 			name: 'Manage Landing Page',
 			tools: ['html', 'sass', 'javascript', 'jquery'],

@@ -59,16 +59,18 @@ const project = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	links: {
-		deploy: {
-			type: String,
-			required: true,
+	links: [
+		{
+			name: {
+				type: String,
+				required: true,
+			},
+			link: {
+				type: String,
+				required: true,
+			},
 		},
-		repository: {
-			type: String,
-			required: true,
-		},
-	},
+	],
 	tools: [String],
 	description: {
 		type: String,
