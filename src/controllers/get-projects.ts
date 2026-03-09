@@ -1,9 +1,11 @@
 import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
 
-export async function getProjects(max: undefined | number) {
-	const limited = max || 0;
-	const projects = await db.Projects.find().limit(limited).sort({ order: 'asc' });
+type GetProjectsProps = { max: number; type: string };
+
+export async function getProjects({ max, type }: GetProjectsProps) {
+	const findForType = type === 'all' ? {} : { type };
+	const projects = await db.Projects.find(findForType).limit(max).sort({ order: 'asc' });
 
 	if (!projects) {
 		throw new ClientError('Project not found!');

@@ -22,7 +22,8 @@ GET {{base}}/certificates
 # @name GetProjects
 GET {{base}}/projects
 // Accept query attribute: 
-// max: number
+// max > type: number; default: 0
+// type > type: 'all' | 'landing-page' | 'full-stack'; default: 'all'
 
 ###
 

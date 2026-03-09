@@ -50,15 +50,15 @@ export const getCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
 const getProjectsRouterSchema = {
 	schema: {
 		querystring: z.object({
-			max: z.coerce.number().optional(),
+			max: z.coerce.number().default(0),
+			type: z.enum(['all', 'landing-page', 'full-stack']).default('all'),
 		}),
 	},
 };
 
 export const getProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.get('/projects', getProjectsRouterSchema, async (request, reply) => {
-		const max = request.query?.max;
-		const { projects } = await getProjects(max);
+		const { projects } = await getProjects(request.query);
 
 		return reply.status(200).send({
 			projects,

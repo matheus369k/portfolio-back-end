@@ -74,6 +74,10 @@ const project = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	type: {
+		type: String,
+		required: true,
+	},
 	create_at: {
 		type: Date,
 		default: Date.now,
