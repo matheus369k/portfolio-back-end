@@ -8,6 +8,18 @@
 # @name CheckHearth
 GET {{base}}/hearth
 
+### Get Website Views
+# @name GetWebsiteViews
+GET {{base}}/website-views
+
+### Post Website Views
+# @name PostWebsiteViews
+POST {{base}}/website-views
+
+### Update Website Views
+# @name UpdateWebsiteViews
+PATCH {{base}}/website-views
+
 ### Post Projects
 # @name PostProject
 POST {{base}}/projects

@@ -7,7 +7,7 @@ import { connectDataBase } from '@/config/database.js';
 import * as certificateRoutes from './routers/certificate.js';
 import { errorHandler } from './error-handler.js';
 import * as mailRoutes from './routers/mail.js';
-import * as hearthRoutes from './routers/hearth.js';
+import * as websiteStatusRoutes from './routers/website-status.js';
 import * as toolRoutes from './routers/tool.js';
 import * as projectRoutes from './routers/project.js';
 import cors from '@fastify/cors';
@@ -25,7 +25,11 @@ app.setErrorHandler(errorHandler);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-app.register(hearthRoutes.CheckHearth);
+app.register(websiteStatusRoutes.updateWebsiteViews);
+app.register(websiteStatusRoutes.createWebsiteViews);
+app.register(websiteStatusRoutes.getWebsiteViews);
+app.register(websiteStatusRoutes.checkHearth);
+
 app.register(mailRoutes.inviteEmailRouter);
 
 app.register(toolRoutes.registerToolsRouter);
