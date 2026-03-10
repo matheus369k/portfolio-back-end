@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 export const project = new mongoose.Schema({
 	access_total: {
 		type: Number,
-		required: false,
+		required: true,
 		default: 0,
 	},
 	slug: {

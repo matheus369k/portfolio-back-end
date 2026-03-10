@@ -39,6 +39,10 @@ GET {{base}}/projects
 // max > type: number; default: 0
 // type > type: 'all' | 'landing-page' | 'full-stack'; default: 'all'
 
+### Update Projects
+# @name UpdateViewProject
+PATCH {{base}}/projects/{{projectId}}
+
 ### Delete Projects
 # @name DeleteProject
 DELETE {{base}}/projects/{{projectId}}
