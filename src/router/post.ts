@@ -63,29 +63,31 @@ export const registerProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 		{
 			schema: {
 				body: z.object({
-					order: z.number(),
 					name: z.string(),
 					slug: z.string(),
 					image_url: z.string(),
 					tools: z.array(z.string()),
 					description: z.string(),
-					links: z.object({
-						deploy: z.string().url(),
-						repository: z.string().url(),
-					}),
+					links: z.array(
+						z.object({
+							name: z.string(),
+							link: z.url(),
+						}),
+					),
+					type: z.enum(['all', 'landing-page', 'full-stack']).default('all'),
 				}),
 			},
 		},
 		async (request, reply) => {
-			const { slug, description, image_url, name, tools, links, order } = request.body;
+			const { slug, description, image_url, name, tools, links, type } = request.body;
 			const { projectId } = await registerProject({
-				order,
 				slug,
 				description,
 				image_url,
 				name,
 				tools,
 				links,
+				type,
 			});
 			return reply.status(201).send({
 				projectId,

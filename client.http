@@ -54,18 +54,20 @@ POST {{base}}/projects
 Content-Type: application/json
 
 {
-  "access_total": 567,
   "name": "This Test Project",
   "slug": "this-test-project",
   "image_url": "http://exemple.com/project-image.png",
   "tools": ["test-1", "test-2", "test-3"],
   "description": "This project is create for teste request.",
-  "links": [{
-    "name": "site",
-    "link": "http://exemple.com/project/deploy",
-	},
+  "links": [
     {
-      "name": "repositório","link": "http://exemple.com/projecr/respository"}
+      "name": "site",
+      "link": "http://exemple.com/project/deploy"
+	  },
+    {
+      "name": "repositório",
+      "link": "http://exemple.com/projecr/respository"
+    }
   ],
   "type": "landing-page"
 }

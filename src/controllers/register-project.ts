@@ -5,13 +5,13 @@ interface RegisterProjectProps {
 	name: string;
 	slug: string;
 	tools: string[];
-	order: number;
 	image_url: string;
 	links: {
-		deploy: string;
-		repository: string;
-	};
+		name: string;
+		link: string;
+	}[];
 	description: string;
+	type: string;
 }
 
 export async function registerProject({
@@ -20,8 +20,8 @@ export async function registerProject({
 	tools,
 	image_url,
 	description,
-	order,
 	links,
+	type,
 }: RegisterProjectProps) {
 	const project = await db.Projects.create({
 		name,
@@ -30,7 +30,7 @@ export async function registerProject({
 		image_url,
 		description,
 		links,
-		order,
+		type,
 	});
 
 	if (!project) {
