@@ -32,3 +32,31 @@ export async function registerCertificates({
 		certificatesId: certificates.id,
 	};
 }
+
+export async function getCertificate(max = 0) {
+	const certificates = await db.Certificates.find().limit(max).sort({
+		order: 'asc',
+	});
+
+	if (!certificates) {
+		throw new ClientError('Certificates not found!');
+	}
+
+	return {
+		certificates,
+	};
+}
+
+export async function deleteCertificate({ id }: { id: string }) {
+	await db.Certificates.findByIdAndDelete({
+		_id: id,
+	});
+
+	const certificates = await db.Certificates.findById({
+		_id: id,
+	});
+
+	if (certificates) {
+		throw new ClientError('Error to delete certificate!');
+	}
+}

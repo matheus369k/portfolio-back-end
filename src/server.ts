@@ -25,10 +25,10 @@ app.setErrorHandler(errorHandler);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-app.register(websiteStatusRoutes.updateWebsiteViews);
-app.register(websiteStatusRoutes.createWebsiteViews);
-app.register(websiteStatusRoutes.getWebsiteViews);
-app.register(websiteStatusRoutes.checkHearth);
+app.register(websiteStatusRoutes.updateWebsiteViewsRouter);
+app.register(websiteStatusRoutes.createWebsiteViewsRouter);
+app.register(websiteStatusRoutes.getWebsiteViewsRouter);
+app.register(websiteStatusRoutes.checkHearthRouter);
 
 app.register(mailRoutes.inviteEmailRouter);
 

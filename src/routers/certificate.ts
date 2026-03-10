@@ -1,7 +1,5 @@
-import { deleteCertificate } from '@/controllers/delete-certificate.js';
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
-import { getCertificate } from '@/controllers/get-certificates.js';
-import { registerCertificates } from '@/controllers/register-certificate.js';
+import * as controllers from '@/controllers/certificate.js';
 import { z } from 'zod/v4';
 
 const RegisterCertificatesRouterSchema = {
@@ -19,7 +17,7 @@ const RegisterCertificatesRouterSchema = {
 export const registerCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
 	app.post('/certificates', RegisterCertificatesRouterSchema, async (request, reply) => {
 		const { title, description, emission_data, link, order } = request.body;
-		const { certificatesId } = await registerCertificates({
+		const { certificatesId } = await controllers.registerCertificates({
 			title,
 			description,
 			emission_data,
@@ -44,13 +42,13 @@ export const getCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
 	app
 		.get('/certificates/:max', GetCertificatesRouterSchema, async (request, reply) => {
 			const { max } = request.params;
-			const { certificates } = await getCertificate(max);
+			const { certificates } = await controllers.getCertificate(max);
 			return reply.status(200).send({
 				certificates,
 			});
 		})
 		.get('/certificates', async (_, reply) => {
-			const { certificates } = await getCertificate();
+			const { certificates } = await controllers.getCertificate();
 
 			return reply.status(200).send({
 				certificates,
@@ -69,7 +67,7 @@ const DeleteCertificatesRouterSchema = {
 export const deleteCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
 	app.delete('/certificates/:id', DeleteCertificatesRouterSchema, async (request, reply) => {
 		const { id } = request.params;
-		await deleteCertificate({ id });
+		await controllers.deleteCertificate({ id });
 
 		return reply.status(204).send('deleted');
 	});

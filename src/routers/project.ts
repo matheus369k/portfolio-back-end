@@ -1,9 +1,7 @@
-import { registerProject } from '@/controllers/register-project.js';
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
-import { getProjects } from '@/controllers/get-projects.js';
-import { deleteProject } from '@/controllers/delete-project.js';
+import * as controllers from '@/controllers/project.js';
+import { deleteProject } from '@/controllers/project.js';
 import { z } from 'zod/v4';
-import { updateViewOfProject } from '@/controllers/update-project.js';
 
 const RegisterProjectsRouterSchema = {
 	schema: {
@@ -27,7 +25,7 @@ const RegisterProjectsRouterSchema = {
 export const registerProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.post('/projects', RegisterProjectsRouterSchema, async (request, reply) => {
 		const { slug, description, image_url, name, tools, links, type } = request.body;
-		const { projectId } = await registerProject({
+		const { projectId } = await controllers.registerProject({
 			type,
 			slug,
 			description,
@@ -54,7 +52,7 @@ const getProjectsRouterSchema = {
 export const getProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.get('/projects', getProjectsRouterSchema, async (request, reply) => {
 		const { max, type } = request.query;
-		const { projects } = await getProjects({ max, type });
+		const { projects } = await controllers.getProjects({ max, type });
 
 		return reply.status(200).send({
 			projects,
@@ -73,7 +71,7 @@ const UpdateViewProjectsRouterSchema = {
 export const updateViewOfProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.patch('/projects/:id', UpdateViewProjectsRouterSchema, async (request, reply) => {
 		const { id } = request.params;
-		await updateViewOfProject({ id });
+		await controllers.updateViewOfProject({ id });
 
 		return reply.status(201).send({ status: 'ok' });
 	});
@@ -84,7 +82,7 @@ const DeleteProjectsRouterSchema = UpdateViewProjectsRouterSchema;
 export const deleteProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.delete('/projects/:id', DeleteProjectsRouterSchema, async (request, reply) => {
 		const { id } = request.params;
-		await deleteProject({ id });
+		await controllers.deleteProject({ id });
 
 		return reply.status(204).send('deleted');
 	});

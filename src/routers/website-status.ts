@@ -1,50 +1,33 @@
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
+import * as controllers from '@/controllers/website-status.js';
 import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 
-export const checkHearth: FastifyPluginCallbackZod = async (app) => {
+export const checkHearthRouter: FastifyPluginCallbackZod = async (app) => {
 	app.get('/hearth', async (_, reply) => {
 		reply.status(200).send('ok');
 	});
 };
 
-export const createWebsiteViews: FastifyPluginCallbackZod = async (app) => {
+export const createWebsiteViewsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.post('/website-views', async (_, reply) => {
-		const websiteViewsAlreadyCreated = await db.WebsiteStatus.countDocuments();
-
-		if (websiteViewsAlreadyCreated > 0) {
-			throw new ClientError('Already created');
-		}
-
-		const websiteViews = await db.WebsiteStatus.insertOne({});
-
-		if (!websiteViews) {
-			throw new ClientError('Error to try create website views');
-		}
+		await controllers.createWebsiteViews();
 
 		return reply.status(201).send({ status: 'ok' });
 	});
 };
 
-export const getWebsiteViews: FastifyPluginCallbackZod = async (app) => {
+export const getWebsiteViewsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.get('/website-views', async (_, reply) => {
-		const websiteViews = await db.WebsiteStatus.find({});
-
-		if (!websiteViews) {
-			throw new ClientError('Not found website views');
-		}
+		const { websiteViews } = await controllers.getWebsiteViews();
 
 		return reply.send(websiteViews);
 	});
 };
 
-export const updateWebsiteViews: FastifyPluginCallbackZod = async (app) => {
-	app.patch('/website-views', async (request, reply) => {
-		const websiteViews = await db.WebsiteStatus.updateOne({ $inc: { views: 1 } });
-
-		if (!websiteViews) {
-			throw new ClientError('Error to try create website views');
-		}
+export const updateWebsiteViewsRouter: FastifyPluginCallbackZod = async (app) => {
+	app.patch('/website-views', async (_, reply) => {
+		await controllers.updateWebsiteViews();
 
 		return reply.status(201).send({ status: 'ok' });
 	});

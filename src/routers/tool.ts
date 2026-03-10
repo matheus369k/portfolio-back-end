@@ -1,7 +1,5 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
-import { registerTool } from '@/controllers/register-tool.js';
-import { deleteTool } from '@/controllers/delete-tool.js';
-import { getTools } from '@/controllers/get-tools.js';
+import * as controllers from '@/controllers/tool.js';
 import { z } from 'zod/v4';
 
 const registerToolsRouterSchema = {
@@ -17,7 +15,7 @@ const registerToolsRouterSchema = {
 export const registerToolsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.post('/tools', registerToolsRouterSchema, async (request, reply) => {
 		const { name, svg_url, category } = request.body;
-		const { toolId } = await registerTool({ name, svg_url, category });
+		const { toolId } = await controllers.registerTool({ name, svg_url, category });
 
 		return reply.status(201).send({
 			toolId,
@@ -27,7 +25,7 @@ export const registerToolsRouter: FastifyPluginCallbackZod = async (app) => {
 
 export const getToolsRoute: FastifyPluginCallbackZod = async (app) => {
 	app.get('/tools', async (_, reply) => {
-		const { tools } = await getTools();
+		const { tools } = await controllers.getTools();
 
 		return reply.status(200).send({
 			tools,
@@ -46,7 +44,7 @@ const deleteToolRouterSchema = {
 export const deleteToolRouter: FastifyPluginCallbackZod = async (app) => {
 	app.delete('/tools/:id', deleteToolRouterSchema, async (request, reply) => {
 		const { id } = request.params;
-		await deleteTool({ id });
+		await controllers.deleteTool({ id });
 
 		return reply.status(204).send('deleted');
 	});
