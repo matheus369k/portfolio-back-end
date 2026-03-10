@@ -4,10 +4,12 @@ import {
 	type ZodTypeProvider,
 } from 'fastify-type-provider-zod';
 import { connectDataBase } from '@/config/database.js';
-import * as deleteRoutes from './router/delete.js';
+import * as certificateRoutes from './routers/certificate.js';
 import { errorHandler } from './error-handler.js';
-import * as postRoutes from './router/post.js';
-import * as getRoutes from './router/get.js';
+import * as mailRoutes from './routers/mail.js';
+import * as hearthRoutes from './routers/hearth.js';
+import * as toolRoutes from './routers/tool.js';
+import * as projectRoutes from './routers/project.js';
 import cors from '@fastify/cors';
 import { env } from '@/env.js';
 import fastify from 'fastify';
@@ -23,19 +25,20 @@ app.setErrorHandler(errorHandler);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-app.register(getRoutes.CheckHealth);
-app.register(getRoutes.getToolsRoute);
-app.register(getRoutes.getProjectsRouter);
-app.register(getRoutes.getCertificatesRouter);
+app.register(hearthRoutes.CheckHearth);
+app.register(mailRoutes.inviteEmailRouter);
 
-app.register(postRoutes.inviteEmailRouter);
-app.register(postRoutes.registerToolsRouter);
-app.register(postRoutes.registerProjectsRouter);
-app.register(postRoutes.registerCertificatesRouter);
+app.register(toolRoutes.registerToolsRouter);
+app.register(toolRoutes.deleteToolRouter);
+app.register(toolRoutes.getToolsRoute);
 
-app.register(deleteRoutes.deleteToolRouter);
-app.register(deleteRoutes.deleteProjectsRouter);
-app.register(deleteRoutes.deleteCertificatesRouter);
+app.register(certificateRoutes.registerCertificatesRouter);
+app.register(certificateRoutes.deleteCertificatesRouter);
+app.register(certificateRoutes.getCertificatesRouter);
+
+app.register(projectRoutes.registerProjectsRouter);
+app.register(projectRoutes.deleteProjectsRouter);
+app.register(projectRoutes.getProjectsRouter);
 
 app.listen({ port: env.PORT, host: env.HOST }).then(() => {
 	connectDataBase()
