@@ -41,6 +41,7 @@ app.register(certificateRoutes.deleteCertificatesRouter);
 app.register(certificateRoutes.getCertificatesRouter);
 
 app.register(projectRoutes.updateViewOfProjectsRouter);
+app.register(projectRoutes.getViewOfProjectsRouter);
 app.register(projectRoutes.registerProjectsRouter);
 app.register(projectRoutes.deleteProjectsRouter);
 app.register(projectRoutes.getProjectsRouter);

@@ -55,6 +55,10 @@ GET {{base}}/projects
 # @name UpdateViewProject
 PATCH {{base}}/projects/{{projectId}}
 
+### Get Projects
+# @name GetViewProject
+GET {{base}}/projects/{{projectId}}
+
 ### Delete Projects
 # @name DeleteProject
 DELETE {{base}}/projects/{{projectId}}

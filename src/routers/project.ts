@@ -77,6 +77,17 @@ export const updateViewOfProjectsRouter: FastifyPluginCallbackZod = async (app) 
 	});
 };
 
+const GetViewOfProjectsRouterSchema = UpdateViewProjectsRouterSchema;
+
+export const getViewOfProjectsRouter: FastifyPluginCallbackZod = async (app) => {
+	app.get('/projects/:id', GetViewOfProjectsRouterSchema, async (request, reply) => {
+		const { id } = request.params;
+		const { accessTotal } = await controllers.getViewOfProject({ id });
+
+		return reply.status(200).send({ accessTotal });
+	});
+};
+
 const DeleteProjectsRouterSchema = UpdateViewProjectsRouterSchema;
 
 export const deleteProjectsRouter: FastifyPluginCallbackZod = async (app) => {

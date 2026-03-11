@@ -68,6 +68,18 @@ export async function updateViewOfProject({ id }: { id: string }) {
 	}
 }
 
+export async function getViewOfProject({ id }: { id: string }) {
+	const projects = await db.Projects.findById(id);
+
+	if (!projects) {
+		throw new ClientError('Project not found!');
+	}
+
+	return {
+		accessTotal: projects.access_total,
+	};
+}
+
 export async function deleteProject({ id }: { id: string }) {
 	await db.Projects.findByIdAndDelete({
 		_id: id,
