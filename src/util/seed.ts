@@ -15,7 +15,6 @@ async function seed() {
 
 	await db.Projects.insertMany([
 		{
-			access_total: 2004,
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/coffee-delivery.jpg',
 			links: [
@@ -112,7 +111,6 @@ async function seed() {
 			type: 'full-stack',
 		},
 		{
-			access_total: 3850,
 			image_url:
 				'https://raw.githubusercontent.com/matheus369k/matheus369k.github.io/refs/heads/main/portfolio-images/projects-images/manage-landing-page.jpg',
 			links: [

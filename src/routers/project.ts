@@ -1,6 +1,5 @@
 import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
 import * as controllers from '@/controllers/project.js';
-import { deleteProject } from '@/controllers/project.js';
 import { z } from 'zod/v4';
 
 const RegisterProjectsRouterSchema = {
@@ -60,35 +59,35 @@ export const getProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	});
 };
 
-const UpdateViewProjectsRouterSchema = {
+const UpdateProjectsPropertyIdRouterSchema = {
 	schema: {
+		body: z.object({
+			property_id: z.coerce.number(),
+		}),
 		params: z.object({
 			id: z.string(),
 		}),
 	},
 };
 
-export const updateViewOfProjectsRouter: FastifyPluginCallbackZod = async (app) => {
-	app.patch('/projects/:id', UpdateViewProjectsRouterSchema, async (request, reply) => {
-		const { id } = request.params;
-		await controllers.updateViewOfProject({ id });
+export const updateProjectPropertyIdRouter: FastifyPluginCallbackZod = async (app) => {
+	app.patch('/projects/:id', UpdateProjectsPropertyIdRouterSchema, async (request, reply) => {
+		await controllers.updatePropertyIdProject({
+			property_id: request.body.property_id,
+			id: request.params.id,
+		});
 
 		return reply.status(201).send({ status: 'ok' });
 	});
 };
 
-const GetViewOfProjectsRouterSchema = UpdateViewProjectsRouterSchema;
-
-export const getViewOfProjectsRouter: FastifyPluginCallbackZod = async (app) => {
-	app.get('/projects/:id', GetViewOfProjectsRouterSchema, async (request, reply) => {
-		const { id } = request.params;
-		const { accessTotal } = await controllers.getViewOfProject({ id });
-
-		return reply.status(200).send({ accessTotal });
-	});
+const DeleteProjectsRouterSchema = {
+	schema: {
+		params: z.object({
+			id: z.string(),
+		}),
+	},
 };
-
-const DeleteProjectsRouterSchema = UpdateViewProjectsRouterSchema;
 
 export const deleteProjectsRouter: FastifyPluginCallbackZod = async (app) => {
 	app.delete('/projects/:id', DeleteProjectsRouterSchema, async (request, reply) => {

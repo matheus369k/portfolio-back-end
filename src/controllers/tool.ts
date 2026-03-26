@@ -50,8 +50,6 @@ export async function deleteTool({ id }: { id: string }) {
 			_id: id,
 		});
 
-		console.log(result);
-
 		if (result) {
 			throw new ClientError('Error to delete tool!');
 		}

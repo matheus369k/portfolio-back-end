@@ -1,10 +1,9 @@
 import mongoose from 'mongoose';
 
 export const project = new mongoose.Schema({
-	access_total: {
-		type: Number,
-		required: true,
-		default: 0,
+	property_id: {
+		type: Number || null,
+		default: null,
 	},
 	slug: {
 		type: String,

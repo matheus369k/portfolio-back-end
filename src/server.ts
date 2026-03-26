@@ -25,8 +25,6 @@ app.setErrorHandler(errorHandler);
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
-app.register(websiteStatusRoutes.updateWebsiteViewsRouter);
-app.register(websiteStatusRoutes.createWebsiteViewsRouter);
 app.register(websiteStatusRoutes.getWebsiteViewsRouter);
 app.register(websiteStatusRoutes.checkHearthRouter);
 
@@ -40,8 +38,7 @@ app.register(certificateRoutes.registerCertificatesRouter);
 app.register(certificateRoutes.deleteCertificatesRouter);
 app.register(certificateRoutes.getCertificatesRouter);
 
-app.register(projectRoutes.updateViewOfProjectsRouter);
-app.register(projectRoutes.getViewOfProjectsRouter);
+app.register(projectRoutes.updateProjectPropertyIdRouter);
 app.register(projectRoutes.registerProjectsRouter);
 app.register(projectRoutes.deleteProjectsRouter);
 app.register(projectRoutes.getProjectsRouter);

@@ -12,14 +12,6 @@ GET {{base}}/hearth
 # @name GetWebsiteViews
 GET {{base}}/website-views
 
-### Post Website Views
-# @name PostWebsiteViews
-POST {{base}}/website-views
-
-### Update Website Views
-# @name UpdateWebsiteViews
-PATCH {{base}}/website-views
-
 ### Post Projects
 # @name PostProject
 POST {{base}}/projects
@@ -51,13 +43,14 @@ GET {{base}}/projects
 // max > type: number; default: 0
 // type > type: 'all' | 'landing-page' | 'full-stack'; default: 'all'
 
-### Update Projects
-# @name UpdateViewProject
+### Update Project Property Id
+# @name UpdateProjectPropertyIdRouter
 PATCH {{base}}/projects/{{projectId}}
+Content-Type: application/json
 
-### Get Projects
-# @name GetViewProject
-GET {{base}}/projects/{{projectId}}
+{
+  "property_id": 83684283
+}
 
 ### Delete Projects
 # @name DeleteProject

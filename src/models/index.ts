@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import { tool } from './tool.js';
 import { project } from './project.js';
 import { certificate } from './certificate.js';
-import { websiteStatus } from './website-status.js';
 
 export const db = {
 	Tools: {
@@ -12,5 +11,4 @@ export const db = {
 	},
 	Projects: mongoose.model('project', project),
 	Certificates: mongoose.model('certificate', certificate),
-	WebsiteStatus: mongoose.model('website_status', websiteStatus),
 };

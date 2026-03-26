@@ -14,6 +14,8 @@ const schemaEnv = z.object({
 	EMAIL_TEMPLATE_ID: z.string(),
 	EMAIL_PUBLIC_KEY: z.string(),
 	EMAIL_PRIVATE_KEY: z.string(),
+	GOOGLE_CREDENTIALS: z.string().optional(),
+	WEBSITE_PROPERTY_ID: z.string().optional(),
 });
 
 export const env = schemaEnv.parse(process.env);

@@ -1,5 +1,6 @@
 import { ClientError } from '@/errors/client-error.js';
 import { db } from '@/models/index.js';
+import { googleProjectTotalViews } from './google-views.js';
 
 interface RegisterProjectProps {
 	name: string;
@@ -49,45 +50,49 @@ type GetProjectsProps = {
 
 export async function getProjects({ max, type }: GetProjectsProps) {
 	const findForType = type === 'all' ? {} : { type };
-	const projects = await db.Projects.find(findForType).limit(max).sort({ access_total: 'desc' });
+	const projects = await db.Projects.find(findForType).limit(max);
 
 	if (!projects) {
 		throw new ClientError('Project not found!');
 	}
 
+	const projectsWithTotalViews = [];
+	for (const project of projects) {
+		const { totalViews } = await googleProjectTotalViews(project.property_id);
+
+		const { __v, property_id, create_at, ...restProject } = project.toObject();
+		projectsWithTotalViews.push({
+			...restProject,
+			access_total: totalViews,
+		});
+	}
+
+	const ordinationProjects = projectsWithTotalViews.toSorted((curr, prev) => {
+		return Number(prev.access_total) - Number(curr.access_total);
+	});
+
 	return {
-		projects,
+		projects: ordinationProjects,
 	};
 }
 
-export async function updateViewOfProject({ id }: { id: string }) {
-	const project = await db.Projects.findByIdAndUpdate(id, { $inc: { access_total: 1 } });
+type UpdatePropertyIdProject = {
+	property_id: number;
+	id: string;
+};
+
+export async function updatePropertyIdProject({ id, property_id }: UpdatePropertyIdProject) {
+	const project = await db.Projects.findByIdAndUpdate(id, { property_id });
 
 	if (!project) {
 		throw new ClientError('Not found Project!');
 	}
 }
 
-export async function getViewOfProject({ id }: { id: string }) {
-	const projects = await db.Projects.findById(id);
-
-	if (!projects) {
-		throw new ClientError('Project not found!');
-	}
-
-	return {
-		accessTotal: projects.access_total,
-	};
-}
-
 export async function deleteProject({ id }: { id: string }) {
-	await db.Projects.findByIdAndDelete({
-		_id: id,
-	});
+	await db.Projects.findByIdAndDelete(id);
 
-	const project = await db.Projects.findById({
-		_id: id,
-	});
+	const project = await db.Projects.findById(id);
 
 	if (project) {
 		throw new ClientError('Error to delete project!');
