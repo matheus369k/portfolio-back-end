@@ -5,18 +5,27 @@
     "lib": [
       "es2023"
     ],
-    "module": "node16",
+    "module": "nodenext",
     "target": "es2022",
     "strict": true,
-    "noEmit": true,
+    "noEmit": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "moduleResolution": "node16",
-    "baseUrl": "./",
+    "outDir": "./build",
+    "rootDir": "./src",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "build"
+  ],
+  "include": [
+    "src"
+  ]
 }
