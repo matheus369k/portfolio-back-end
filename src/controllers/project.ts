@@ -58,7 +58,7 @@ export async function getProjects({ max, type }: GetProjectsProps) {
 
 	const projectsWithTotalViews = [];
 	for (const project of projects) {
-		const { totalViews } = await googleProjectTotalViews(project.property_id);
+		const { totalViews } = await googleProjectTotalViews(project?.property_id || '');
 
 		const { __v, property_id, create_at, ...restProject } = project.toObject();
 		projectsWithTotalViews.push({
