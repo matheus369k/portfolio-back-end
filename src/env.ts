@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const schemaEnv = z.object({
 	FRONTEND_URL: z.string().url().default('*'),
