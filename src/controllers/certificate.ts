@@ -1,4 +1,4 @@
-import { ClientError } from '@/errors/client-error.js'
+import { ClientError, NotFoundError } from '@/errors/client-error.js'
 import models from '@/models/models.js'
 
 interface RegisterCertificatesProps {
@@ -25,7 +25,7 @@ export async function registerCertificates({
 	})
 
 	if (!certificates) {
-		throw new ClientError('Error to create certificate!')
+		throw new NotFoundError('error to tried create a new certificate!')
 	}
 
 	return {
@@ -39,7 +39,7 @@ export async function getCertificate(max = 0) {
 	})
 
 	if (!certificates) {
-		throw new ClientError('Certificates not found!')
+		throw new NotFoundError('not found certificates!')
 	}
 
 	return {
@@ -57,6 +57,6 @@ export async function deleteCertificate({ id }: { id: string }) {
 	})
 
 	if (certificates) {
-		throw new ClientError('Error to delete certificate!')
+		throw new ClientError('error to tried delete certificate!')
 	}
 }

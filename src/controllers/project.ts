@@ -1,6 +1,6 @@
-import { ClientError } from '@/errors/client-error.js'
-import { googleProjectTotalViews } from './google-views.js'
+import { ClientError, NotFoundError } from '@/errors/client-error.js'
 import models from '@/models/models.js'
+import { googleProjectTotalViews } from './google-views.js'
 
 interface RegisterProjectProps {
 	name: string
@@ -35,7 +35,7 @@ export async function registerProject({
 	})
 
 	if (!project) {
-		throw new ClientError('Error to create project')
+		throw new NotFoundError('error to tried create a new project!')
 	}
 
 	return {
@@ -53,7 +53,7 @@ export async function getProjects({ max, type }: GetProjectsProps) {
 	const projects = await models.Projects().find(findForType).limit(max)
 
 	if (!projects) {
-		throw new ClientError('Project not found!')
+		throw new NotFoundError('not found projects!')
 	}
 
 	const projectsWithTotalViews = []
@@ -86,7 +86,7 @@ export async function updatePropertyIdProject({ id, property_id }: UpdatePropert
 	const project = await models.Projects().findByIdAndUpdate(id, { property_id })
 
 	if (!project) {
-		throw new ClientError('Not found Project!')
+		throw new NotFoundError('error to tried updated project propertyId!')
 	}
 }
 
@@ -96,6 +96,6 @@ export async function deleteProject({ id }: { id: string }) {
 	const project = await models.Projects().findById(id)
 
 	if (project) {
-		throw new ClientError('Error to delete project!')
+		throw new ClientError('error to tried delete project!')
 	}
 }

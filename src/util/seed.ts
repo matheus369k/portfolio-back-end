@@ -1,5 +1,5 @@
 import database from '@/database/database.js'
-import { env } from '@/env'
+import { env } from '@/util/env'
 import models from '@/models/models'
 
 async function seed() {

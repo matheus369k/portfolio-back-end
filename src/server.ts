@@ -4,13 +4,13 @@ import {
 	type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
 import * as certificateRoutes from './routers/certificate.js'
-import { errorHandler } from './error-handler.js'
+import { errorHandler } from './errors/error-handler.js'
 import * as mailRoutes from './routers/mail.js'
 import * as websiteStatusRoutes from './routers/website-status.js'
 import * as toolRoutes from './routers/tool.js'
 import * as projectRoutes from './routers/project.js'
 import cors from '@fastify/cors'
-import { env } from '@/env.js'
+import { env } from '@/util/env.js'
 import fastify from 'fastify'
 import database from './database/database.js'
 

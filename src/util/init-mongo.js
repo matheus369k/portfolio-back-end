@@ -1,4 +1,4 @@
-import { env } from '@/env'
+import { env } from '@/util/env'
 
 db.createUser({
   user: env.DATABASE_USERNAME,

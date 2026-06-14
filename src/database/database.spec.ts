@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { env } from '@/env'
+import { env } from '@/util/env'
 import database from './database'
 
 const spyConnect = vi.spyOn(mongoose, 'connect')

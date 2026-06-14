@@ -1,4 +1,4 @@
-import { ClientError } from '@/errors/client-error.js'
+import { ClientError, NotFoundError } from '@/errors/client-error.js'
 import models from '@/models/models'
 
 interface RegisterToolProps {
@@ -14,7 +14,7 @@ export async function registerTool({ category, name, svg_url }: RegisterToolProp
 	})
 
 	if (!tool) {
-		throw new ClientError('Error to create tool!')
+		throw new NotFoundError('error to tried create a new tool!')
 	}
 
 	return {
@@ -30,7 +30,7 @@ export async function getTools() {
 	])
 
 	if (!front_end || !back_end || !another) {
-		throw new ClientError('Tools Not found')
+		throw new NotFoundError('not found tool!')
 	}
 
 	return {
@@ -51,7 +51,7 @@ export async function deleteTool({ id }: { id: string }) {
 		})
 
 		if (result) {
-			throw new ClientError('Error to delete tool!')
+			throw new ClientError('error to tried delete tool!')
 		}
 	}
 }
