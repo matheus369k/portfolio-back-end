@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-export const project = new mongoose.Schema({
+export default new mongoose.Schema({
 	property_id: {
 		type: Number || null,
 		default: null,
@@ -42,4 +42,4 @@ export const project = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-});
+})

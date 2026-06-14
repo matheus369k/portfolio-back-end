@@ -2,53 +2,57 @@ import {
 	serializerCompiler,
 	validatorCompiler,
 	type ZodTypeProvider,
-} from 'fastify-type-provider-zod';
-import { connectDataBase } from '@/config/database.js';
-import * as certificateRoutes from './routers/certificate.js';
-import { errorHandler } from './error-handler.js';
-import * as mailRoutes from './routers/mail.js';
-import * as websiteStatusRoutes from './routers/website-status.js';
-import * as toolRoutes from './routers/tool.js';
-import * as projectRoutes from './routers/project.js';
-import cors from '@fastify/cors';
-import { env } from '@/env.js';
-import fastify from 'fastify';
+} from 'fastify-type-provider-zod'
+import * as certificateRoutes from './routers/certificate.js'
+import { errorHandler } from './error-handler.js'
+import * as mailRoutes from './routers/mail.js'
+import * as websiteStatusRoutes from './routers/website-status.js'
+import * as toolRoutes from './routers/tool.js'
+import * as projectRoutes from './routers/project.js'
+import cors from '@fastify/cors'
+import { env } from '@/env.js'
+import fastify from 'fastify'
+import database from './database/database.js'
 
-const app = fastify().withTypeProvider<ZodTypeProvider>();
+const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.register(cors, {
 	origin: env.FRONTEND_URL,
-});
+})
 
-app.setErrorHandler(errorHandler);
+app.setErrorHandler(errorHandler)
 
-app.setValidatorCompiler(validatorCompiler);
-app.setSerializerCompiler(serializerCompiler);
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
 
-app.register(websiteStatusRoutes.getWebsiteViewsRouter);
-app.register(websiteStatusRoutes.checkHearthRouter);
+app.register(websiteStatusRoutes.getWebsiteViewsRouter)
+app.register(websiteStatusRoutes.checkHearthRouter)
 
-app.register(mailRoutes.inviteEmailRouter);
+app.register(mailRoutes.inviteEmailRouter)
 
-app.register(toolRoutes.registerToolsRouter);
-app.register(toolRoutes.deleteToolRouter);
-app.register(toolRoutes.getToolsRoute);
+app.register(toolRoutes.registerToolsRouter)
+app.register(toolRoutes.deleteToolRouter)
+app.register(toolRoutes.getToolsRoute)
 
-app.register(certificateRoutes.registerCertificatesRouter);
-app.register(certificateRoutes.deleteCertificatesRouter);
-app.register(certificateRoutes.getCertificatesRouter);
+app.register(certificateRoutes.registerCertificatesRouter)
+app.register(certificateRoutes.deleteCertificatesRouter)
+app.register(certificateRoutes.getCertificatesRouter)
 
-app.register(projectRoutes.updateProjectPropertyIdRouter);
-app.register(projectRoutes.registerProjectsRouter);
-app.register(projectRoutes.deleteProjectsRouter);
-app.register(projectRoutes.getProjectsRouter);
+app.register(projectRoutes.updateProjectPropertyIdRouter)
+app.register(projectRoutes.registerProjectsRouter)
+app.register(projectRoutes.deleteProjectsRouter)
+app.register(projectRoutes.getProjectsRouter)
 
-app.listen({ port: env.PORT, host: env.HOST }).then(() => {
-	connectDataBase()
-		.then(() => {
-			console.log('HTTP server running!');
+app.listen({ port: env.PORT, host: env.HOST }).then((url) => {
+	database
+		.connect({
+			url: env.DATABASE_URL,
+			options: {
+				pass: env.DATABASE_PASSWORD,
+				user: env.DATABASE_USERNAME,
+			},
 		})
-		.catch((error) => {
-			console.log(error.message);
-		});
-});
+		.then(() => {
+			console.log(`HTTP server running in ${url}...`)
+		})
+})

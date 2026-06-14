@@ -6,7 +6,8 @@
     "dev": "tsx watch src/server.ts",
     "seed": "tsx src/util/seed.ts",
     "start": "node build/server.js",
-    "build": "tsc && tsc-alias"
+    "build": "tsc && tsc-alias",
+    "test": "vitest"
   },
   "license": "MIT",
   "devDependencies": {
@@ -17,6 +18,7 @@
     "tsc-alias": "^1.8.17",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
+    "vitest": "^4.1.8",
     "zod": "^4.4.3"
   },
   "dependencies": {

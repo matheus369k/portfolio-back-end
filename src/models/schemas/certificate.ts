@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-export const certificate = new mongoose.Schema({
+export default new mongoose.Schema({
 	order: {
 		type: Number,
 		required: true,
@@ -25,4 +25,4 @@ export const certificate = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-});
+})

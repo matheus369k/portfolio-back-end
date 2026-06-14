@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
-export const tool = new mongoose.Schema({
+export default new mongoose.Schema({
 	name: {
 		type: String,
 		required: true,
@@ -13,4 +13,4 @@ export const tool = new mongoose.Schema({
 		type: Date,
 		default: Date.now,
 	},
-});
+})
