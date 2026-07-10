@@ -11,7 +11,7 @@ describe('Mongo Models DB', () => {
 	const mockedMongoose = vi.mocked(mongoose)
 
 	it('should receive corrected props when executed tool model', () => {
-		models.Tools()
+		models.Tools(tool)
 
 		expect(mockedMongoose.model).toHaveBeenNthCalledWith(1, ...['tools_front', tool])
 		expect(mockedMongoose.model).toHaveBeenNthCalledWith(2, ...['tools_back', tool])
@@ -19,13 +19,13 @@ describe('Mongo Models DB', () => {
 	})
 
 	it('should receive corrected props when executed project model', () => {
-		models.Projects()
+		models.Projects(project)
 
 		expect(mockedMongoose.model).toHaveBeenCalledWith(...['project', project])
 	})
 
 	it('should receive corrected props when executed certificate model', () => {
-		models.Certificates()
+		models.Certificates(certificate)
 
 		expect(mockedMongoose.model).toHaveBeenCalledWith(...['certificate', certificate])
 	})

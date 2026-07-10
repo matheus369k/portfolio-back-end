@@ -1,8 +1,15 @@
 import database from '@/database/database.js'
 import { env } from '@/util/env'
 import models from '@/models/models'
+import project from '@/models/schemas/project'
+import certificate from '@/models/schemas/certificate'
+import tool from '@/models/schemas/tool'
 
 async function seed() {
+	const projectsModel = models.Projects(project)
+	const certificatesModel = models.Certificates(certificate)
+	const toolsModel = models.Tools(tool)
+
 	await database.connect({
 		url: env.DATABASE_URL,
 		options: {
@@ -11,12 +18,12 @@ async function seed() {
 		},
 	})
 
-	await models.Projects().deleteMany({})
-	await models.Certificates().deleteMany({})
+	await projectsModel.deleteMany({})
+	await certificatesModel.deleteMany({})
 	await Promise.all([
-		await models.Tools().front_end.deleteMany({}),
-		await models.Tools().back_end.deleteMany({}),
-		await models.Tools().another.deleteMany({}),
+		await toolsModel.front_end.deleteMany({}),
+		await toolsModel.back_end.deleteMany({}),
+		await toolsModel.another.deleteMany({}),
 	])
 
 	const fakerDatas = {
@@ -304,13 +311,13 @@ async function seed() {
 		},
 	}
 
-	await models.Projects().insertMany(fakerDatas.projects)
-	await models.Certificates().insertMany(fakerDatas.certificates)
+	await projectsModel.insertMany(fakerDatas.projects)
+	await certificatesModel.insertMany(fakerDatas.certificates)
 
 	await Promise.all([
-		models.Tools().front_end.insertMany(fakerDatas.tools.front_end),
-		models.Tools().back_end.insertMany(fakerDatas.tools.back_end),
-		models.Tools().another.insertMany(fakerDatas.tools.another),
+		toolsModel.front_end.insertMany(fakerDatas.tools.front_end),
+		toolsModel.back_end.insertMany(fakerDatas.tools.back_end),
+		toolsModel.another.insertMany(fakerDatas.tools.another),
 	])
 }
 

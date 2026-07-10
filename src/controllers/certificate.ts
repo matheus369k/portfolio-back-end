@@ -1,7 +1,7 @@
 import { ClientError, NotFoundError } from '@/errors/client-error.js'
-import models from '@/models/models.js'
+import type { CertificateModel } from '@/models/types'
 
-interface RegisterCertificatesProps {
+type CreateOneProps = {
 	order: number
 	title: string
 	description: string
@@ -9,54 +9,71 @@ interface RegisterCertificatesProps {
 	link: string
 }
 
-export async function registerCertificates({
-	title,
-	description,
-	emission_data,
-	link,
-	order,
-}: RegisterCertificatesProps) {
-	const certificates = await models.Certificates().create({
-		emission_data,
-		description,
-		title,
-		order,
-		link,
-	})
+export class CertificatesControllers {
+	private certificateModel: CertificateModel
 
-	if (!certificates) {
-		throw new NotFoundError('error to tried create a new certificate!')
+	constructor(certificateModel: CertificateModel) {
+		this.certificateModel = certificateModel
 	}
 
-	return {
-		certificatesId: certificates.id,
+	async createOne(props: CreateOneProps) {
+		const { title, description, emission_data, link, order } = props
+		const certificates = await this.certificateModel.create({
+			emission_data,
+			description,
+			title,
+			order,
+			link,
+		})
+
+		if (!certificates) {
+			throw new NotFoundError('error to tried create a new certificate!')
+		}
+
+		return {
+			certificatesId: certificates.id,
+		}
 	}
-}
 
-export async function getCertificate(max = 0) {
-	const certificates = await models.Certificates().find().limit(max).sort({
-		order: 'asc',
-	})
+	async getAll() {
+		const certificates = await this.certificateModel.find().sort({
+			order: 'asc',
+		})
 
-	if (!certificates) {
-		throw new NotFoundError('not found certificates!')
+		if (!certificates) {
+			throw new NotFoundError('not found certificates!')
+		}
+
+		return {
+			certificates,
+		}
 	}
 
-	return {
-		certificates,
+	async getWithLimite(max = 0) {
+		const certificates = await this.certificateModel.find().limit(max).sort({
+			order: 'asc',
+		})
+
+		if (!certificates) {
+			throw new NotFoundError('not found certificates!')
+		}
+
+		return {
+			certificates,
+		}
 	}
-}
 
-export async function deleteCertificate({ id }: { id: string }) {
-	await models.Certificates().findByIdAndDelete({
-		_id: id,
-	})
+	async deleteById({ id }: { id: string }) {
+		await this.certificateModel.findByIdAndDelete({
+			_id: id,
+		})
 
-	const certificates = await models.Certificates().findById({
-		_id: id,
-	})
+		const certificates = await this.certificateModel.findById({
+			_id: id,
+		})
 
-	if (certificates) {
-		throw new ClientError('error to tried delete certificate!')
+		if (certificates) {
+			throw new ClientError('error to tried delete certificate!')
+		}
 	}
 }

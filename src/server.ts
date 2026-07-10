@@ -3,12 +3,13 @@ import {
 	validatorCompiler,
 	type ZodTypeProvider,
 } from 'fastify-type-provider-zod'
-import * as certificateRoutes from './routers/certificate.js'
+import certificatesRoutes from './routers/certificate.js'
 import { errorHandler } from './errors/error-handler.js'
-import * as mailRoutes from './routers/mail.js'
-import * as websiteStatusRoutes from './routers/website-status.js'
-import * as toolRoutes from './routers/tool.js'
-import * as projectRoutes from './routers/project.js'
+import mailRoutes from './routers/mail.js'
+import websiteViewsRoutes from './routers/website-views.js'
+import checkHearthRoutes from './routers/check-hearth.js'
+import toolsRoutes from './routers/tool.js'
+import projectsRoutes from './routers/project.js'
 import cors from '@fastify/cors'
 import { env } from '@/util/env.js'
 import fastify from 'fastify'
@@ -25,23 +26,24 @@ app.setErrorHandler(errorHandler)
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.register(websiteStatusRoutes.getWebsiteViewsRouter)
-app.register(websiteStatusRoutes.checkHearthRouter)
+app.register(websiteViewsRoutes.getTotal)
+app.register(checkHearthRoutes.isOn)
 
-app.register(mailRoutes.inviteEmailRouter)
+app.register(mailRoutes.sendOne)
 
-app.register(toolRoutes.registerToolsRouter)
-app.register(toolRoutes.deleteToolRouter)
-app.register(toolRoutes.getToolsRoute)
+app.register(toolsRoutes.createOne)
+app.register(toolsRoutes.deleteById)
+app.register(toolsRoutes.getAll)
 
-app.register(certificateRoutes.registerCertificatesRouter)
-app.register(certificateRoutes.deleteCertificatesRouter)
-app.register(certificateRoutes.getCertificatesRouter)
+app.register(certificatesRoutes.createOne)
+app.register(certificatesRoutes.getWithLimite)
+app.register(certificatesRoutes.getAll)
+app.register(certificatesRoutes.deleteById)
 
-app.register(projectRoutes.updateProjectPropertyIdRouter)
-app.register(projectRoutes.registerProjectsRouter)
-app.register(projectRoutes.deleteProjectsRouter)
-app.register(projectRoutes.getProjectsRouter)
+app.register(projectsRoutes.updatePropertyId)
+app.register(projectsRoutes.deleteById)
+app.register(projectsRoutes.createOne)
+app.register(projectsRoutes.getForType)
 
 app.listen({ port: env.PORT, host: env.HOST }).then((url) => {
 	database

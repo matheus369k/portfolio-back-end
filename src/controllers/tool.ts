@@ -1,57 +1,67 @@
 import { ClientError, NotFoundError } from '@/errors/client-error.js'
-import models from '@/models/models'
+import type { ToolModel } from '@/models/types'
 
-interface RegisterToolProps {
+type ToolCategories = 'front_end' | 'back_end' | 'another'
+
+type CreateOneToolProps = {
 	name: string
 	svg_url: string
-	category: 'front_end' | 'back_end' | 'another'
+	category: ToolCategories
 }
 
-export async function registerTool({ category, name, svg_url }: RegisterToolProps) {
-	const tool = await models.Tools()[category].create({
-		name,
-		svg_url,
-	})
+export class ToolsControllers {
+	private readonly categories = ['front_end', 'back_end', 'another']
+	private toolModel: ToolModel
 
-	if (!tool) {
-		throw new NotFoundError('error to tried create a new tool!')
+	constructor(toolModel: ToolModel) {
+		this.toolModel = toolModel
 	}
 
-	return {
-		toolId: tool.id,
-	}
-}
-
-export async function getTools() {
-	const [front_end, back_end, another] = await Promise.all([
-		models.Tools().front_end.find({}),
-		models.Tools().back_end.find({}),
-		models.Tools().another.find({}),
-	])
-
-	if (!front_end || !back_end || !another) {
-		throw new NotFoundError('not found tool!')
-	}
-
-	return {
-		tools: { front_end, back_end, another },
-	}
-}
-
-const categories = ['front_end', 'back_end', 'another']
-
-export async function deleteTool({ id }: { id: string }) {
-	for (const category of categories) {
-		await models.Tools()[category as 'front_end' | 'back_end' | 'another'].findByIdAndDelete({
-			_id: id,
+	async createOne(props: CreateOneToolProps) {
+		const { name, svg_url, category } = props
+		const tool = await this.toolModel[category].create({
+			name,
+			svg_url,
 		})
 
-		const result = await models.Tools()[category as 'front_end' | 'back_end' | 'another'].findById({
-			_id: id,
-		})
+		if (!tool) {
+			throw new NotFoundError('error to tried create a new tool!')
+		}
 
-		if (result) {
-			throw new ClientError('error to tried delete tool!')
+		return {
+			toolId: tool.id,
+		}
+	}
+
+	async getAll() {
+		const [front_end, back_end, another] = await Promise.all([
+			this.toolModel.front_end.find(),
+			this.toolModel.back_end.find(),
+			this.toolModel.another.find(),
+		])
+
+		if (!front_end || !back_end || !another) {
+			throw new NotFoundError('not found tools!')
+		}
+
+		return {
+			tools: { front_end, back_end, another },
+		}
+	}
+
+	async deleteById({ id }: { id: string }) {
+		for (const category of this.categories) {
+			await this.toolModel[category as ToolCategories].findByIdAndDelete({
+				_id: id,
+			})
+
+			const tool = await this.toolModel[category as ToolCategories].findById({
+				_id: id,
+			})
+
+			if (tool) {
+				throw new ClientError('error to tried delete tool!')
+			}
 		}
 	}
 }

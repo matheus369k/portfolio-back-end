@@ -1,8 +1,10 @@
-import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod';
-import * as controllers from '@/controllers/certificate.js';
-import { z } from 'zod/v4';
+import type { FastifyPluginCallbackZod } from 'fastify-type-provider-zod'
+import { z } from 'zod/v4'
+import { CertificatesControllers } from '@/controllers/certificate.js'
+import models from '@/models/models'
+import certificate from '@/models/schemas/certificate'
 
-const RegisterCertificatesRouterSchema = {
+const CreateOneRouterSchema = {
 	schema: {
 		body: z.object({
 			title: z.string().min(5),
@@ -12,63 +14,75 @@ const RegisterCertificatesRouterSchema = {
 			order: z.coerce.number(),
 		}),
 	},
-};
+}
 
-export const registerCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
-	app.post('/certificates', RegisterCertificatesRouterSchema, async (request, reply) => {
-		const { title, description, emission_data, link, order } = request.body;
-		const { certificatesId } = await controllers.registerCertificates({
-			title,
-			description,
-			emission_data,
-			link,
-			order,
-		});
-		return reply.status(201).send({
-			certificatesId,
-		});
-	});
-};
-
-const GetCertificatesRouterSchema = {
+const GetWithLimiteRouterSchema = {
 	schema: {
 		params: z.object({
 			max: z.coerce.number().default(0),
 		}),
 	},
-};
+}
 
-export const getCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
-	app
-		.get('/certificates/:max', GetCertificatesRouterSchema, async (request, reply) => {
-			const { max } = request.params;
-			const { certificates } = await controllers.getCertificate(max);
-			return reply.status(200).send({
-				certificates,
-			});
-		})
-		.get('/certificates', async (_, reply) => {
-			const { certificates } = await controllers.getCertificate();
-
-			return reply.status(200).send({
-				certificates,
-			});
-		});
-};
-
-const DeleteCertificatesRouterSchema = {
+const DeleteByIdRouterSchema = {
 	schema: {
 		params: z.object({
 			id: z.string(),
 		}),
 	},
-};
+}
 
-export const deleteCertificatesRouter: FastifyPluginCallbackZod = async (app) => {
-	app.delete('/certificates/:id', DeleteCertificatesRouterSchema, async (request, reply) => {
-		const { id } = request.params;
-		await controllers.deleteCertificate({ id });
+class CertificatesRoutes {
+	private readonly baseRoute = '/certificates'
+	private readonly certificatesControllers = new CertificatesControllers(
+		models.Certificates(certificate),
+	)
 
-		return reply.status(204).send('deleted');
-	});
-};
+	createOne: FastifyPluginCallbackZod = async (app) => {
+		app.post(this.baseRoute, CreateOneRouterSchema, async (request, reply) => {
+			const { title, description, emission_data, link, order } = request.body
+			const { certificatesId } = await this.certificatesControllers.createOne({
+				emission_data,
+				description,
+				order,
+				title,
+				link,
+			})
+			return reply.status(201).send({
+				certificatesId,
+			})
+		})
+	}
+
+	getAll: FastifyPluginCallbackZod = async (app) => {
+		app.get(this.baseRoute, async (_, reply) => {
+			const { certificates } = await this.certificatesControllers.getAll()
+
+			return reply.status(200).send({
+				certificates,
+			})
+		})
+	}
+
+	getWithLimite: FastifyPluginCallbackZod = async (app) => {
+		app.get(`${this.baseRoute}/:max`, GetWithLimiteRouterSchema, async (request, reply) => {
+			const { max } = request.params
+			const { certificates } = await this.certificatesControllers.getWithLimite(max)
+			return reply.status(200).send({
+				certificates,
+			})
+		})
+	}
+
+	deleteById: FastifyPluginCallbackZod = async (app) => {
+		app.delete(`${this.baseRoute}/:id`, DeleteByIdRouterSchema, async (request, reply) => {
+			const { id } = request.params
+			await this.certificatesControllers.deleteById({ id })
+
+			return reply.status(204).send('deleted')
+		})
+	}
+}
+
+const certificatesRoutes = new CertificatesRoutes()
+export default certificatesRoutes

@@ -49,7 +49,7 @@ PATCH {{base}}/projects/{{projectId}}
 Content-Type: application/json
 
 {
-  "property_id": 83684283
+  "property_id": 529450323
 }
 
 ### Delete Projects

@@ -6,7 +6,7 @@
     "dev": "tsx watch src/server.ts",
     "seed": "tsx src/util/seed.ts",
     "start": "node build/server.js",
-    "build": "tsc && tsc-alias",
+    "build": "tsc -p tsconfig.build.json && tsc-alias",
     "test": "vitest"
   },
   "license": "MIT",

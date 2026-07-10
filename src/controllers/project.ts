@@ -1,8 +1,7 @@
 import { ClientError, NotFoundError } from '@/errors/client-error.js'
-import models from '@/models/models.js'
-import { googleProjectTotalViews } from './google-views.js'
+import type { ProjectModel } from '@/models/types.js'
 
-interface RegisterProjectProps {
+type CreateOneProjectProps = {
 	name: string
 	slug: string
 	tools: string[]
@@ -15,87 +14,72 @@ interface RegisterProjectProps {
 	type: string
 }
 
-export async function registerProject({
-	name,
-	slug,
-	tools,
-	image_url,
-	description,
-	links,
-	type,
-}: RegisterProjectProps) {
-	const project = await models.Projects().create({
-		description,
-		image_url,
-		links,
-		tools,
-		slug,
-		name,
-		type,
-	})
-
-	if (!project) {
-		throw new NotFoundError('error to tried create a new project!')
-	}
-
-	return {
-		projectId: project.id,
-	}
-}
-
-type GetProjectsProps = {
+type GetForTypeProjectsProps = {
 	max: number
 	type: string
 }
 
-export async function getProjects({ max, type }: GetProjectsProps) {
-	const findForType = type === 'all' ? {} : { type }
-	const projects = await models.Projects().find(findForType).limit(max)
-
-	if (!projects) {
-		throw new NotFoundError('not found projects!')
-	}
-
-	const projectsWithTotalViews = []
-	for (const project of projects) {
-		const propertyId = project?.property_id ?? ''
-		const { totalViews } = await googleProjectTotalViews(propertyId)
-
-		const { __v, property_id, create_at, ...restProject } = project.toObject()
-		projectsWithTotalViews.push({
-			...restProject,
-			access_total: totalViews,
-		})
-	}
-
-	const ordinationProjects = projectsWithTotalViews.toSorted((curr, prev) => {
-		return Number(prev.access_total) - Number(curr.access_total)
-	})
-
-	return {
-		projects: ordinationProjects,
-	}
-}
-
-type UpdatePropertyIdProject = {
+type UpdatePropertyIdProjectProps = {
 	property_id: number
 	id: string
 }
 
-export async function updatePropertyIdProject({ id, property_id }: UpdatePropertyIdProject) {
-	const project = await models.Projects().findByIdAndUpdate(id, { property_id })
+export class ProjectsControllers {
+	private projectModel: ProjectModel
 
-	if (!project) {
-		throw new NotFoundError('error to tried updated project propertyId!')
+	constructor(projectModel: ProjectModel) {
+		this.projectModel = projectModel
 	}
-}
 
-export async function deleteProject({ id }: { id: string }) {
-	await models.Projects().findByIdAndDelete(id)
+	async createOne(props: CreateOneProjectProps) {
+		const { name, slug, tools, image_url, description, links, type } = props
+		const project = await this.projectModel.create({
+			description,
+			image_url,
+			links,
+			tools,
+			slug,
+			name,
+			type,
+		})
 
-	const project = await models.Projects().findById(id)
+		if (!project) {
+			throw new NotFoundError('error to tried create a new project!')
+		}
 
-	if (project) {
-		throw new ClientError('error to tried delete project!')
+		return {
+			projectId: project.id,
+		}
+	}
+
+	async getForType({ max, type }: GetForTypeProjectsProps) {
+		const findForType = type === 'all' ? {} : { type }
+		const projects = await this.projectModel.find(findForType).limit(max)
+
+		if (!projects) {
+			throw new NotFoundError('not found projects!')
+		}
+
+		return {
+			projects,
+		}
+	}
+
+	async updatePropertyId({ id, property_id }: UpdatePropertyIdProjectProps) {
+		const project = await this.projectModel.findByIdAndUpdate(id, { property_id })
+
+		if (!project) {
+			throw new NotFoundError('error to tried updated project propertyId!')
+		}
+	}
+
+	async deleteById({ id }: { id: string }) {
+		await this.projectModel.findByIdAndDelete(id)
+
+		const project = await this.projectModel.findById(id)
+
+		if (project) {
+			throw new ClientError('error to tried delete project!')
+		}
 	}
 }

@@ -1,12 +1,10 @@
 import mongoose from 'mongoose'
-import certificate from './schemas/certificate'
-import project from './schemas/project'
-import tool from './schemas/tool'
+import type { CertificateSchema, ProjectSchema, ToolSchema } from './schemas/types'
 
 class Models {
 	private readonly database = mongoose
 
-	Tools() {
+	Tools(tool: ToolSchema) {
 		return {
 			front_end: this.database.model('tools_front', tool),
 			back_end: this.database.model('tools_back', tool),
@@ -14,11 +12,11 @@ class Models {
 		}
 	}
 
-	Projects() {
+	Projects(project: ProjectSchema) {
 		return mongoose.model('project', project)
 	}
 
-	Certificates() {
+	Certificates(certificate: CertificateSchema) {
 		return mongoose.model('certificate', certificate)
 	}
 }
