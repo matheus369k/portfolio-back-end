@@ -1,0 +1,42 @@
+name: CI/CD - Continuous Integration and Deliveries
+
+on: 
+  push:
+    branches:
+      - main
+
+permissions: 
+  contents: write
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Cloning repository
+        uses: actions/checkout@v4
+
+      - name: Using Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Packages
+        run: npm install
+
+      - name: Testing Project
+        run: npm run test
+
+      - name: Building Project
+        run: npm run build
+
+  continuous-deliveries:
+    needs: continuous-integration
+    runs-on: ubuntu-latest
+
+    steps: 
+      - name: Render Deploy
+        run: curl -fX POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+
+
+
