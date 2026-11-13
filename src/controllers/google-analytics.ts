@@ -23,6 +23,8 @@ export class GoogleAnalytics {
 					},
 				],
 				metrics: [{ name: 'screenPageViews' }],
+			},{
+				timeout: 5000
 			})
 
 			return {

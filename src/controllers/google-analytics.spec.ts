@@ -44,6 +44,8 @@ describe('GoogleAnalytics Controllers', () => {
 					},
 				],
 				metrics: [{ name: 'screenPageViews' }],
+			},{
+				timeout: 5000
 			})
 		})
 
